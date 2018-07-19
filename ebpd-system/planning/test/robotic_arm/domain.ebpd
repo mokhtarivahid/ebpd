@@ -1,0 +1,39 @@
+;; The robotic_arm domain has been designed to to demonstrate the system 
+;; in a very simple task on a real robotic arm platform. 
+;; The goal in this domain is to move all objects on a table to a tray. 
+;; It includes four actions 'move', 'pick' and 'place'.
+
+(define (domain robotic_arm)
+ (:requirements :strips :typing) 
+ (:types robot object location)
+ (:predicates (table ?t - location)
+              (tray ?t - location)
+              (arm ?a - robot)
+              (bottle ?b - object)
+              (at ?a - robot ?x - location)
+              (on ?o - object ?x - location)
+              (in ?o - object ?x - location)
+              (free ?a - robot)
+              (carry ?o - object ?a - robot))
+
+   (:action move
+       :parameters (?a - robot ?from ?to - location)
+       :parent     (nil ())
+       :static     ()
+       :precondition (at ?a ?from)
+       :effect (and (at ?a ?to) (not (at ?a ?from))))
+
+   (:action pick
+       :parameters (?a - robot ?o - object ?t - location)
+       :parent     (pick (?a ?o ?t))
+       :static     (and (arm ?a) (bottle ?o) (table ?t))
+       :precondition (and (on ?o ?t) (at ?a ?t) (free ?a))
+       :effect (and (carry ?o ?a) (not (free ?a)) (not (on ?o ?t))))
+
+   (:action place
+       :parameters (?a - robot ?o - object ?t - location)
+       :parent     (place (?a ?o ?t))
+       :static     (and (arm ?a) (bottle ?o) (tray ?t))
+       :precondition (and (carry ?o ?a) (at ?a ?t))
+       :effect (and (in ?o ?t) (free ?a) (not (carry ?o ?a))))
+)

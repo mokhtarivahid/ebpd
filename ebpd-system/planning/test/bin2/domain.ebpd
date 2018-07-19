@@ -1,0 +1,39 @@
+;; The bin domain has been designed to to demonstrate the system in a 
+;; very simple task on a real armic arm platform. 
+;; The goal in this domain is to move all objects on a table to a tray. 
+;; It includes four actions 'move', 'pick' and 'drop'.
+
+(define (domain bin)
+ (:requirements :strips :typing) 
+ (:types place object arm)
+ (:predicates 
+        (at ?a - arm ?x - place)
+        (on ?o - object ?x - place)
+        (in ?o - object ?x - place)
+        (reach ?a - arm ?x - place)
+        (holding ?o - object)
+        (free ?a - arm)
+        (table ?t - place)
+        (bin ?t - place))
+
+   (:action move
+       :parameters (?a - arm ?from ?to - place)
+       :parent     (nil ())
+       :static     (reach ?a ?to)
+       :precondition (at ?a ?from)
+       :effect (and (at ?a ?to) (not (at ?a ?from))))
+
+   (:action pick
+       :parameters (?a - arm ?o - object ?t - place)
+       :parent     (pick (?o ?t))
+       :static     (table ?t)
+       :precondition (and (on ?o ?t) (at ?a ?t) (free ?a))
+       :effect (and (holding ?o) (not (free ?a)) (not (on ?o ?t))))
+
+   (:action drop
+       :parameters (?a - arm ?o - object ?t - place)
+       :parent     (drop (?o ?t))
+       :static     (bin ?t)
+       :precondition (and (holding ?o) (at ?a ?t))
+       :effect (and (in ?o ?t) (free ?a) (not (holding ?o))))
+)

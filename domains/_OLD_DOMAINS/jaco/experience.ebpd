@@ -1,0 +1,60 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (experience clear)
+  (:domain robotic_arm)
+  (:episode_id 110)
+  (:task clear
+   :parameters (table1)
+   :key-propositions
+       ((init(arm_at arm1 table1))
+        (init(arm_active arm1 standby))
+        (init(arm_free arm1))
+        (init(on obj1 table1))
+        (static(arm_canreach arm1 table1))
+        (static(arm_canreach arm1 tray1))
+        (static(arm_capabilities arm1 grip))
+        (static(arm_capabilities arm1 standby))
+        (goal(on obj1 tray1)))
+   :plan
+       ((activate arm1 standby grip)
+        (detect_pose_object arm1 obj1 table1)
+        (pick_up_object arm1 obj1 table1)
+        (carry_object arm1 obj1 table1 tray1)
+        (detect_pose_place arm1 obj1 tray1)
+        (place_object arm1 obj1 tray1))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (experience clear)
+  (:domain robotic_arm)
+  (:episode_id 111)
+  (:task clear
+   :parameters (table1)
+   :key-propositions
+       ((init(arm_at arm1 table1))
+        (init(arm_active arm1 standby))
+        (init(arm_free arm1))
+        (init(on obj1 table1))
+        (init(on obj2 table1))
+        (static(arm_canreach arm1 table1))
+        (static(arm_canreach arm1 tray1))
+        (static(arm_capabilities arm1 grip))
+        (static(arm_capabilities arm1 standby))
+        (goal(on obj1 tray1))
+        (goal(on obj2 tray1)))
+   :plan
+       ((activate arm1 standby grip)
+        (detect_pose_object arm1 obj2 table1)
+        (pick_up_object arm1 obj2 table1)
+        (carry_object arm1 obj2 table1,tray1)
+        (detect_pose_place arm1 obj2 tray1)
+        (place_object arm1 obj2 tray1)
+        (move_arm arm1 tray1 table1)
+        (detect_pose_object arm1 obj1 table1)
+        (pick_up_object arm1 obj1 table1)
+        (carry_object arm1 obj1 table1 tray1)
+        (detect_pose_place arm1 obj1 tray1)
+        (place_object arm1 obj1 tray1))))
+

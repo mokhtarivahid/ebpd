@@ -1,0 +1,195 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% > remove timestamps from key propositions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% to use union predicate
+:- use_module(library(lists)).
+
+rm_timestamps([],[]).
+rm_timestamps([K|R],L):-
+    K=..[at_start|_],!,         % skip at_start
+    rm_timestamps(R,L).
+rm_timestamps([K|R],L):-
+    K=..[_|[P]],
+    P=..[instance|_],!,         % skip instance predicates
+    rm_timestamps(R,L).
+rm_timestamps([K|R],L):-
+    K=..[_|[P]],
+    P=..[new_constant|_],!,     % skip new_constant
+    rm_timestamps(R,L).
+rm_timestamps([K|R],[P|L]):-
+    K=..[_|[P]],
+    rm_timestamps(R,L).
+
+%member_of(+Variable,+VariableList)
+member_of(_,[]):- fail, !.
+member_of(V,[X|_]):- V==X, !.
+member_of(V,[_|Y]):- member_of(V,Y).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% > infer goal predicates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%infer_goal(+KeyPropositions, +GivenArgument1, +GivenArgument2, -GoalPredicates)
+infer_goal([],_,_,[]):-!.
+infer_goal(K,GA1,GA2,G):-
+    infer_unary_goal(K,GA1,GA2,G),
+    G\=[],!.
+        %writeln('infer_unary_goal'-G).
+infer_goal(K,GA1,GA2,G):-
+    infer_binary_goal(K,GA1,GA2, G).
+        %writeln('infer_binary_goal'-G).
+
+% return only one predicate that has two given arguments as its own arguments
+infer_unary_goal([],_,_,[]):-!.
+infer_unary_goal([K|_],GA1,GA2,[K]):-
+    K=..[_|[A1,A2]],
+    (A1==GA1,A2==GA2; A1==GA2,A2==GA1), !.
+infer_unary_goal([_|R],GA1,GA2,K):-
+    infer_unary_goal(R,GA1,GA2,K).
+
+% return predicates containing given argument as their own arguments
+%get_root_goals(+KeyPropositions, +GivenArgument, -GoalPredicates, -RestOfKeyPropositions)
+get_root_goals([],_,[],[]):-!.
+get_root_goals([K|R],GA,[K|L],RK):-
+    K=..[_|[A1,A2]],
+    (A1==GA; A2==GA), !,
+    get_root_goals(R,GA,L,RK).
+get_root_goals([K|R],GA,L,[K|RK]):-
+    get_root_goals(R,GA,L,RK).
+
+% return goal predicates
+infer_binary_goal([],_,_,[]):-!.
+infer_binary_goal(K,Arg1,Arg2,G):-
+    get_root_goals(K,Arg1,NG,R),
+    member(X,NG),
+    get_intermediate_arg(X,Arg1,InArg),
+    extract_goals(R,InArg,Arg2,[X],G).
+
+%get_intermediate_arg(+Predicate,+Arg1,-Arg2)
+get_intermediate_arg(P,Arg1,Arg2):-
+    P=..[_|[A1,A2]],!,
+    (A1==Arg1,A2=Arg2,!; A2==Arg1,A1=Arg2).
+
+%extract_goals(+KeyPropositions,+IntermediateArg,+GoalArgument,+ListOfGoalPredicates,-NewListOfGoalPredicates)
+extract_goals(_,_,_,[],[]):-!.
+extract_goals([],_,_,_,[]):-!.
+extract_goals(K,A,_,_,[]):- %% to return empty list if there is no goal
+    get_root_goals(K,A,L,_),
+    \+ member(_,L),!.
+extract_goals(K,A,GA,G,NG):-
+    get_root_goals(K,A,L,_),
+    member(X,L),
+    get_intermediate_arg(X,A,NA),
+    NA==GA, !,
+    append(G,[X],NG).
+extract_goals(K,A,GA,G,FG):-
+    get_root_goals(K,A,L,R),
+    member(X,L),
+    append(G,[X],NG),
+    get_intermediate_arg(X,A,NA),
+    extract_goals(R,NA,GA,NG,FG).
+
+get_shortest_goal([],[]):-!.
+get_shortest_goal([H],H):-!.
+get_shortest_goal([H,K|T],M) :-
+    H=[],K=[],!,
+    get_shortest_goal(T,M).
+get_shortest_goal([H,K|T],M) :-
+    H=[],!,
+    get_shortest_goal([K|T],M).
+get_shortest_goal([H,K|T],M) :-
+    K=[],!,
+    get_shortest_goal([H|T],M).
+get_shortest_goal([H,K|T],M) :-
+    length(H,L1),
+    length(K,L2),
+    L1 =< L2,!,
+    get_shortest_goal([H|T],M).
+get_shortest_goal([H,K|T],M) :-
+    length(H,L1),
+    length(K,L2),
+    L1 > L2,
+    get_shortest_goal([K|T],M).
+
+
+%infer_goals(+KeyPropositions, +GivenArgumentsList, -GoalPredicates)
+infer_goals(_,[],[]):-!.
+%infer_goals(_,[],[]):-!.
+infer_goals(KP,[X|T],G):-
+    infer_goals(KP,X,T,G1),
+    infer_goals(KP,T,G2),
+    strict_reunion(G1,G2,G).
+        %writeln('X'-X),
+        %writeln('T'-T),
+        %writeln('KP'-KP),
+        %writeln('G'-G).
+
+%infer_goals(+KeyPropositions, +GivenArgument, +GivenArgumentsList, -GoalPredicates)
+infer_goals(_,_,[],[]):-!.
+infer_goals(KP,X,[H|T],G):-
+        %writeln('KP'-KP),
+    (bagof(K, (infer_goal(KP,X,H,K),K\=[]), Goal); Goal=[]),
+        %writeln('X'-X), write('H'-H),
+        %writeln('Goal'-Goal),
+    get_shortest_goal(Goal,G1),
+        %writeln('G1'-G1),
+    infer_goals(KP,X,T,G2),
+        %writeln('G2'-G2),
+    strict_reunion(G1,G2,G).
+        %writeln('Goal'-Goal).
+
+%get_goal_entities(+GoalPredicates,-ListOfGoalEntities)
+get_goal_entities([],[]).
+get_goal_entities([X|T],[A1,A2|R]):-
+    X=..[_|[A1,A2]],
+    get_goal_entities(T,R).
+
+rm_repeatitions([],[]).
+rm_repeatitions([X|T],R):-
+    strict_member(X,T),!,
+    rm_repeatitions(T,R).
+rm_repeatitions([X|T],[X|R]):-
+    rm_repeatitions(T,R).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% for test
+test:-
+    retractall(robot_activity_experience(_,_,_)),
+    ['MyExamples/race_activity_experiences'],
+    robot_activity_experience(43690,_,[T,KP,_,_,_]),
+    T=..[N|A],
+    writeln('N'-N),
+    writeln('A'-A),
+    rm_timestamps(KP,NKP),
+    writeln('KP'-NKP),
+    test_infer_goals(NKP,A,G),!,
+    writeln('G'-G).
+
+%test_infer_goals(+KeyPropositions, +GivenArgumentsList, -GoalPredicates)
+test_infer_goals(_,[],[]):-!.
+test_infer_goals(_,[_],[]):-!.
+test_infer_goals(KP,[X|T],G):-
+    test_infer_goals(KP,X,T,G1),
+    test_infer_goals(KP,T,G2),
+    union(G1,G2,G).
+
+%test_infer_goals(+KeyPropositions, +GivenArgument, +GivenArgumentsList, -GoalPredicates)
+test_infer_goals(_,_,[],[]):-!.
+test_infer_goals(KP,X,[H|T],G):-
+        %writeln('KP'-KP),
+    (bagof(K, (infer_goal(KP,X,H,K),K\=[]), Goal); Goal=[]),
+        writeln('X'-X), writeln('H'-H),
+        writeln('Goal'-Goal),
+        length(Goal,L),
+        writeln('L'-L),
+    get_shortest_goal(Goal,G1),
+        writeln('G1'-G1),
+    test_infer_goals(KP,X,T,G2),
+        %writeln('G2'-G2),
+    union(G1,G2,G).
+        %writeln('Goal'-Goal).
+

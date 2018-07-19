@@ -1,0 +1,93 @@
+(define (problem ServeACoffee guest1 table2 counter1)
+
+  (:domain race)
+
+  (:objects 
+                  counter1 table1 table2 - table
+                  floorareatamsrestaurant1 manipulationareanorthtable1 manipulationareasouthtable1 premanipulationareanorthtable1 premanipulationareasouthtable1 manipulationareanorthtable2 manipulationareasouthtable2 premanipulationareanorthtable2 premanipulationareasouthtable2 manipulationareaeastcounter1 premanipulationareaeastcounter1 - area
+                  placingarearighttable1 placingarealefttable1 placingarearighttable2 placingarealefttable2 placingareacounter1 - placingarea
+                  sittingareatable1 sittingareatable2 - sittingarea
+                  mug1 - object
+                  guest1 - guest
+                  leftarm1 rightarm1 - arm
+                  torso1 - torso
+                  trixi1 - robot
+                  armtuckedposture1 armtosideposture1 armcarryposture1 armunnamedposture1 - armposture
+                  torsodownposture1 torsomiddleposture1 torsoupposture1 - torsoposture)
+
+
+  (:static 
+                  (table table1)
+                  (haspremanipulationarea table1 premanipulationareasouthtable1)
+                  (haspremanipulationarea table1 premanipulationareanorthtable1)
+                  (hasmanipulationarea table1 manipulationareasouthtable1)
+                  (hasmanipulationarea table1 manipulationareanorthtable1)
+                  (hasplacingarea table1 placingarearighttable1)
+                  (hasplacingarea table1 placingarealefttable1)
+                  (hassittingarea table1 sittingareatable1)
+                  (table table2)
+                  (haspremanipulationarea table2 premanipulationareasouthtable2)
+                  (haspremanipulationarea table2 premanipulationareanorthtable2)
+                  (hasmanipulationarea table2 manipulationareasouthtable2)
+                  (hasmanipulationarea table2 manipulationareanorthtable2)
+                  (hasplacingarea table2 placingarearighttable2)
+                  (hasplacingarea table2 placingarealefttable2)
+                  (hassittingarea table2 sittingareatable2)
+                  (counter counter1)
+                  (haspremanipulationarea counter1 premanipulationareaeastcounter1)
+                  (hasmanipulationarea counter1 manipulationareaeastcounter1)
+                  (hasplacingarea counter1 placingareacounter1)
+                  (manipulationarea manipulationareanorthtable1)
+                  (manipulationarea manipulationareasouthtable1)
+                  (manipulationarea manipulationareanorthtable2)
+                  (manipulationarea manipulationareasouthtable2)
+                  (manipulationarea manipulationareaeastcounter1)
+                  (premanipulationarea floorareatamsrestaurant1)
+                  (premanipulationarea premanipulationareanorthtable1)
+                  (premanipulationarea premanipulationareasouthtable1)
+                  (premanipulationarea premanipulationareanorthtable2)
+                  (premanipulationarea premanipulationareasouthtable2)
+                  (premanipulationarea premanipulationareaeastcounter1)
+                  (haspremanipulationarea manipulationareanorthtable1 premanipulationareanorthtable1)
+                  (haspremanipulationarea manipulationareasouthtable1 premanipulationareasouthtable1)
+                  (haspremanipulationarea manipulationareanorthtable2 premanipulationareanorthtable2)
+                  (haspremanipulationarea manipulationareasouthtable2 premanipulationareasouthtable2)
+                  (haspremanipulationarea manipulationareaeastcounter1 premanipulationareaeastcounter1)
+                  (placingarealeft placingarealefttable1)
+                  (placingarearight placingarearighttable1)
+                  (placingarealeft placingarealefttable2)
+                  (placingarearight placingarearighttable2)
+                  (reachable placingarealefttable1 manipulationareanorthtable1)
+                  (reachable placingarearighttable1 manipulationareasouthtable1)
+                  (reachable placingarealefttable2 manipulationareanorthtable2)
+                  (reachable placingarearighttable2 manipulationareasouthtable2)
+                  (reachable placingareacounter1 manipulationareaeastcounter1)
+                  (hasplacingarea sittingareatable1 placingarearighttable1)
+                  (hasplacingarea sittingareatable1 placingarealefttable1)
+                  (hasplacingarea sittingareatable2 placingarearighttable2)
+                  (hasplacingarea sittingareatable2 placingarealefttable2)
+                  (leftarm leftarm1)
+                  (rightarm rightarm1)
+                  (armtuckedposture armtuckedposture1)
+                  (armcarryposture armcarryposture1)
+                  (armtosideposture armtosideposture1)
+                  (armunnamedposture armunnamedposture1)
+                  (torsodownposture torsodownposture1)
+                  (torsoupposture torsoupposture1)
+                  (torsomiddleposture torsomiddleposture1)
+                  (hastorso trixi1 torso1)
+                  (hasarm trixi1 leftarm1)
+                  (hasarm trixi1 rightarm1)
+                  (at guest1 sittingareatable2))
+  (:init 
+                  (armfree leftarm1)
+                  (armfree rightarm1)
+                  (hasarmposture leftarm1 armunnamedposture1)
+                  (hasarmposture rightarm1 armunnamedposture1)
+                  (hastorsoposture torso1 torsoupposture1)
+                  (on mug1 placingareacounter1)
+                  (robotat trixi1 floorareatamsrestaurant1))
+
+  (:goal (and (on mug1 placingarearighttable2)))
+
+)

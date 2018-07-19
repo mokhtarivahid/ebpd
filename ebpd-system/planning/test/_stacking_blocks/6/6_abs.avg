@@ -1,0 +1,7 @@
+# $problem $search_time $total_time $eval_node $gen_node $memory $plan_length
+p10.pddl.ebpd 637 637 20 28 1037648 20 
+p12.pddl.ebpd 1111 1111 24 34 1264992 24 
+p14.pddl.ebpd 2143 2143 28 40 1469608 28 
+p16.pddl.ebpd 3840 3840 32 46 1682192 32 
+p18.pddl.ebpd 6900 6900 36 52 1897168 36 
+p20.pddl.ebpd 11530 11530 40 58 2141744 40 

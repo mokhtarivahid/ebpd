@@ -1,0 +1,93 @@
+;;;
+;;; In this domain two piles and a table are attached to a location. There 
+;;; is one hoist belonging to the location that can move between places (i.e., 
+;;; piles and table), or carry containers to the places. A pallet is on top of 
+;;; each pile in which a stack of containers may be on each pile. The table is 
+;;; used to unstack the containers on it before stacking the objects again in 
+;;; the pile. One object can be on top of each object in a pile, while many 
+;;; objects can be placed on the table.
+;;;
+;;; The general strategy to move containers between two piles is first 
+;;; to move the containers from the first pile to the table, and then stack 
+;;; them on the second pile.
+;;;
+
+(define (domain blocks)
+ (:requirements :strips :typing)
+ (:types
+  location      ; there are two connected locations in the harbor
+  place         ; includes pile and table
+                ; pile is attached to a location 
+                ; it holds a pallet and a stack of containers 
+                ; table is attached to a location to place objects on it
+  hoist         ; belongs to a location to pickup containers
+  container)
+
+ ;(:constants
+ ; pallet - container)
+
+ (:predicates
+   (attached ?p - place ?l - location)   ; pile ?p attached to location ?l
+   (belong ?h - hoist ?l - location)    ; hoist ?k belongs to location ?l
+
+   (pile ?p - place)                    ; place ?p is a pile
+   (table ?t - place)                   ; place ?t is a table
+
+   (at ?h - hoist ?p - place)           ; hoist ?h is at pile ?p
+   (holding ?h - hoist ?c - container)  ; hoist ?h is holding a container ?c
+   (empty ?h - hoist)                   ; hoist ?h is empty
+
+   (in ?c - container ?p - place)       ; container ?c is within pile ?p
+   (top ?c - container ?p - place)      ; container ?c is on top of pile ?p
+   (on ?c1 - container ?c2 - container) ; container ?c1 is on container ?c2
+   (base ?c - container)                ; container ?c is the base container
+
+   (ontable ?c - container ?t - place)  ; container ?c is on table ?t
+
+   (blue ?b - container)                ; container ?c is blue
+   (red ?b - container)                 ; container ?c is red
+   (pallet ?c - container)              ; container ?c is a pallet
+   )
+
+ ;; there are 5 operators in this domain:
+
+ ;; moves hoist between piles
+ (:action move
+     :parameters (?h - hoist ?from - place ?to - place ?l - location)
+     :parent     (nil ())
+     :static     (and (belong ?h ?l) (attached ?from ?l) (attached ?to ?l))
+     :precondition (and (at ?h ?from) (not (= ?to ?from)))
+     :effect (and (not (at ?h ?from)) (at ?h ?to)))
+
+ ;; takes a container from a pile with a hoist
+ (:action unstack
+     :parameters (?h - hoist ?c - container ?k - container ?p - place ?l - location)
+     :parent     (unstack (?h ?c ?k ?p))
+     :static     (and (belong ?h ?l) (attached ?p ?l) (pile ?p))
+     :precondition (and (at ?h ?p) (empty ?h) (in ?c ?p) (top ?c ?p) (on ?c ?k))
+     :effect (and (holding ?h ?c) (top ?k ?p) (not (in ?c ?p)) (not (top ?c ?p)) (not (on ?c ?k)) (not (empty ?h))))
+
+ ;; puts a container held by a hoist on a nearby pile
+ (:action stack
+     :parameters (?h - hoist ?c - container ?k - container ?p - place ?l - location)
+     :parent     (stack (?h ?c ?k ?p))
+     :static     (and (belong ?h ?l) (attached ?p ?l) (pile ?p))
+     :precondition (and (at ?h ?p) (holding ?h ?c) (top ?k ?p))
+     :effect (and (in ?c ?p) (top ?c ?p) (on ?c ?k) (not (top ?k ?p)) (not (holding ?h ?c)) (empty ?h)))
+
+ ;; takes a container from a table with a hoist
+ (:action pickup
+     :parameters (?h - hoist ?c - container ?t - place ?l - location)
+     :parent     (pick (?h ?c ?t))
+     :static     (and (belong ?h ?l) (attached ?t ?l) (table ?t))
+     :precondition (and (at ?h ?t) (empty ?h) (ontable ?c ?t))
+     :effect (and (holding ?h ?c) (not (ontable ?c ?t)) (not (empty ?h))))
+
+ ;; puts a container held by a hoist on a nearby table
+ (:action putdown
+     :parameters (?h - hoist ?c - container ?t - place ?l - location)
+     :parent     (put (?h ?c ?t))
+     :static     (and (belong ?h ?l) (attached ?t ?l) (table ?t))
+     :precondition (and (holding ?h ?c) (at ?h ?t))
+     :effect (and (ontable ?c ?t) (not (holding ?h ?c)) (empty ?h)))
+)

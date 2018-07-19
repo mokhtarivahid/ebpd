@@ -1,0 +1,32 @@
+(define (abstraction-hierarchies)
+
+  (:domain stacking-blocks)
+
+  (:predicate-abstraction
+      (table ?table)             : (table ?table)
+      (pile ?pile)               : (pile ?pile)
+      (block ?block)             : (block ?block)
+      (blue ?block)              : (blue ?block)
+      (red ?block)               : (red ?block)
+      (pallet ?pallet)           : (pallet ?pallet)
+      (on ?block1 ?block2)       : (on ?block1 ?block2)
+      (ontable ?block ?table)    : (ontable ?block ?table)
+      (top ?block ?pile)         : (top ?block ?pile)
+      (holding ?hoist ?block)    : (holding ?block)
+      (location ?location)       : ()
+      (hoist ?hoist)             : ()
+      (attached ?pile ?location) : ()
+      (belong ?hoist ?location)  : ()
+      (at ?hoist ?pile)          : ()
+      (empty ?hoist)             : ()
+  )
+
+  (:operator-abstraction
+      (unstack ?hoist ?block1 ?block2 ?pile ?loc) : (unstack ?block1 ?block2 ?pile)
+      (stack ?hoist ?block2 ?block1 ?pile ?loc)   : (stack ?block2 ?block1 ?pile)
+      (pickup ?hoist ?block ?table ?loc)          : (pick ?block ?table)
+      (putdown ?hoist ?block ?table ?loc)         : (put ?block ?table)
+      (move ?hoist ?from ?to ?loc)                : ()
+  )
+
+)

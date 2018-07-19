@@ -1,0 +1,34 @@
+(define (domain robotic_arm)
+ (:requirements :strips :typing) 
+ (:types place object arm pose)
+ (:predicates 
+        (at ?a - arm ?x - place)
+        (on ?o - object ?x - place)
+        (in ?o - object ?x - place)
+        (gripper ?a - arm ?p - pose)
+        (posture ?p - pose)
+        (reach ?a - arm ?x - place)
+        (holding ?o - object)
+        (table ?t - place)
+        (tray ?t - place))
+
+   (:action move
+       :parameters (?a - arm ?from ?to - place)
+       :precondition (and (at ?a ?from) (reach ?a ?to))
+       :effect (and (at ?a ?to) (not (at ?a ?from))))
+
+   (:action grip
+       :parameters (?a - arm ?p - pose ?n - pose)
+       :precondition (and (gripper ?a ?p) (posture ?n))
+       :effect (and (gripper ?a ?n) (not (gripper ?a ?p))))
+
+   (:action pickup
+       :parameters (?a - arm ?o - object ?t - place)
+       :precondition (and (on ?o ?t) (at ?a ?t) (table ?t) (gripper ?a open))
+       :effect (and (holding ?o) (gripper ?a hold) (not (on ?o ?t)) (not (gripper ?a open))))
+
+   (:action putdown
+       :parameters (?a - arm ?o - object ?t - place)
+       :precondition (and (holding ?o) (at ?a ?t) (gripper ?a hold) (tray ?t))
+       :effect (and (in ?o ?t) (gripper ?a open) (not (gripper ?a hold)) (not (holding ?o))))
+)

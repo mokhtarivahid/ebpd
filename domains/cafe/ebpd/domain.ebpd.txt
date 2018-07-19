@@ -1,0 +1,284 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; cafe domain
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (domain cafe)
+    (:requirements :strips :typing)
+
+    (:types table area placingarea sittingarea object guest robot arm torso armposture torsoposture)
+
+    (:predicates
+                ; table
+                (haspremanipulationarea ?t - table ?pma - area)
+                (hasmanipulationarea ?t - table ?ma - area)
+                (hasplacingarea ?t - table ?pa - placingarea)
+                (hassittingarea ?t - table ?s - sittingarea)
+                (table ?t - table)
+                (counter ?c - table)
+
+                ; manipulation area
+                (manipulationarea ?ma - area)
+                (manipulationareasouth ?ma - area)
+                (manipulationareanorth ?ma - area)
+                (manipulationareaeast ?ma - area)
+                (manipulationareawest ?ma - area)
+
+                ; premanipulation area
+                (premanipulationarea ?pma - area)
+                (premanipulationareasouth ?pma - area)
+                (premanipulationareanorth ?pma - area)
+                (premanipulationareaeast ?pma - area)
+                (premanipulationareawest ?pma - area)
+
+                ; manipulationarea <--> premanipulationarea
+                (haspremanipulationarea ?ma - area ?pma - area)
+
+                ; sitting area
+                (hasplacingarea ?s - sittingarea ?pa - placingarea)
+
+                ; placing area
+                (placingarealeft ?pa - placingarea)
+                (placingarearight ?pa - placingarea)
+                (reachable ?pa - placingarea ?ma - area)
+
+                ; guest
+                (at ?g - guest ?sa - sittingarea)
+
+                ; arm
+                (leftarm ?arm - arm)
+                (rightarm ?arm - arm)
+                (armfree ?arm - arm)
+                (holding ?arm - arm ?obj - object)
+                (hasarmposture ?arm - arm ?ap - armposture)
+
+                (armtuckedposture ?ap - armposture)
+                (armcarryposture ?ap - armposture)
+                (armtosideposture ?ap - armposture)
+                (armunnamedposture ?ap - armposture)
+
+                ; torso
+                (hastorsoposture ?torso - torso ?tp - torsoposture)
+                (torsodownposture ?tp - torsoposture)
+                (torsoupposture ?tp - torsoposture)
+                (torsomiddleposture ?tp - torsoposture)
+
+                ; object
+                (on ?obj - object ?pa - placingarea)
+                (objectobserved ?obj - object ?pa - placingarea)
+
+                ; robot
+                (robotat ?robot - robot ?a - area)
+                (hastorso ?robot - robot ?torso - torso)
+                (hasarm ?robot - robot ?arm - arm)
+                (readytosafemove ?robot - robot)
+                )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action tuck_arm
+        :parameters     (?robot - robot ?pma - area ?arm - arm ?ap ?nap - armposture)
+        :static         (premanipulationarea ?pma)
+        :precondition   (and (robotat ?robot ?pma)
+                             (hasarm ?robot ?arm)
+                             (hasarmposture ?arm ?ap)
+                             (armtuckedposture ?nap))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hasarmposture ?arm ?ap))
+                             (hasarmposture ?arm ?nap))
+    )
+
+    (:action move_arm_to_carry
+        :parameters (?robot - robot ?pma - area ?arm - arm ?ap ?nap - armposture)
+        :static         (premanipulationarea ?pma)
+        :precondition   (and (robotat ?robot ?pma)
+                             (hasarm ?robot ?arm)
+                             (hasarmposture ?arm ?ap)
+                             (armcarryposture ?nap))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hasarmposture ?arm ?ap))
+                             (hasarmposture ?arm ?nap))
+    )
+
+    (:action move_arm_to_side
+        :parameters (?robot - robot ?pma - area ?arm - arm ?ap ?nap - armposture)
+        :static         (premanipulationarea ?pma)
+        :precondition   (and (robotat ?robot ?pma)
+                             (hasarm ?robot ?arm)
+                             (hasarmposture ?arm ?ap)
+                             (armtosideposture ?nap))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hasarmposture ?arm ?ap))
+                             (hasarmposture ?arm ?nap))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action move_torso_down
+        :parameters     (?robot - robot ?pma - area ?torso - torso ?tp ?tpd - torsoposture)
+        :static         (and (premanipulationarea ?pma)
+                             (torsodownposture ?tpd))
+        :precondition   (and (robotat ?robot ?pma)
+                             (hastorso ?robot ?torso)
+                             (hastorsoposture ?torso ?tp))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hastorsoposture ?torso ?tp))
+                             (hastorsoposture ?torso ?tpd))
+    )
+
+    (:action move_torso_middle
+        :parameters     (?robot - robot ?pma - area ?torso - torso ?tp ?tpm - torsoposture)
+        :static         (and (premanipulationarea ?pma)
+                             (torsomiddleposture ?tpm))
+        :precondition   (and (robotat ?robot ?pma)
+                             (hastorso ?robot ?torso)
+                             (hastorsoposture ?torso ?tp))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hastorsoposture ?torso ?tp))
+                             (hastorsoposture ?torso ?tpm))
+    )
+
+    (:action move_torso_up
+        :parameters     (?robot - robot ?pma - area ?torso - torso ?tp ?tpu - torsoposture)
+        :static         (and (premanipulationarea ?pma)
+                             (torsoupposture ?tpu))
+        :precondition   (and (robotat ?robot ?pma)
+                             (hastorso ?robot ?torso)
+                             (hastorsoposture ?torso ?tp))
+        :effect         (and (not (readytosafemove ?robot))
+                             (not (hastorsoposture ?torso ?tp))
+                             (hastorsoposture ?torso ?tpu))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action ready_to_safe_move_with_no_object
+        :parameters     (?robot - robot ?pma - area ?arm1 ?arm2 - arm ?ap1 ?ap2 - armposture ?torso - torso ?tp - torsoposture)
+        :static         (and (premanipulationarea ?pma)
+                             (leftarm ?arm1)
+                             (rightarm ?arm2)
+                             (armtuckedposture ?ap1)
+                             (armtuckedposture ?ap2)
+                             (torsodownposture ?tp))
+        :precondition   (and (robotat ?robot ?pma)
+                             (armfree ?arm1)
+                             (armfree ?arm2)
+                             (hasarmposture ?arm1 ?ap1)
+                             (hasarmposture ?arm2 ?ap2)
+                             (hastorsoposture ?torso ?tp))
+        :effect              (readytosafemove ?robot)
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action ready_to_safe_move_with_one_object
+        :parameters     (?robot - robot ?pma - area ?arm1 ?arm2 - arm ?ap1 ?ap2 - armposture ?torso - torso ?tp - torsoposture ?obj - object)
+        :static         (and (premanipulationarea ?pma)
+                             (leftarm ?arm1)
+                             (rightarm ?arm2)
+                             (armtuckedposture ?ap1)
+                             (armcarryposture ?ap2)
+                             (torsomiddleposture ?tp))
+        :precondition   (and (robotat ?robot ?pma)
+                             (armfree ?arm1)
+                             (holding ?arm2 ?obj)
+                             (hasarmposture ?arm1 ?ap1)
+                             (hasarmposture ?arm2 ?ap2)
+                             (hastorsoposture ?torso ?tp))
+        :effect              (readytosafemove ?robot)
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action ready_to_safe_move_with_two_object
+        :parameters     (?robot - robot ?pma - area ?arm1 ?arm2 - arm ?ap1 ?ap2 - armposture ?torso - torso ?tp - torsoposture ?obj1 ?obj2 - object)
+        :static         (and (premanipulationarea ?pma)
+                             (leftarm ?arm1)
+                             (rightarm ?arm2)
+                             (armcarryposture ?ap1)
+                             (armcarryposture ?ap2)
+                             (torsomiddleposture ?tp))
+        :precondition   (and (robotat ?robot ?pma)
+                             (holding ?arm1 ?obj1)
+                             (holding ?arm2 ?obj2)
+                             (hasarmposture ?arm1 ?ap1)
+                             (hasarmposture ?arm2 ?ap2)
+                             (hastorsoposture ?torso ?tp))
+        :effect              (readytosafemove ?robot)
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; move from a premanipulation area to a premanipulation area
+    (:action move_base
+        :parameters     (?robot - robot ?from ?to - area)
+        :static         (and (premanipulationarea ?from)
+                             (premanipulationarea ?to))
+        :precondition   (and (robotat ?robot ?from)
+                             (readytosafemove ?robot))
+        :effect         (and (not (robotat ?robot ?from))
+                             (robotat ?robot ?to))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; move blindly from a premanipulation area to a manipulation area
+    (:action move_base_blind
+        :parameters     (?robot - robot ?from ?to - area)
+        :static         (and (premanipulationarea ?from)
+                             (manipulationarea ?to))
+        :precondition   (and (robotat ?robot ?from)
+                             (haspremanipulationarea ?to ?from))
+        :effect         (and (not (robotat ?robot ?from))
+                             (robotat ?robot ?to))
+    )
+
+    ; move blindly from a manipulation area to a premanipulation area
+    (:action move_base_blind
+        :parameters     (?robot - robot ?from ?to - area)
+        :static         (and (manipulationarea ?from)
+                             (premanipulationarea ?to))
+        :precondition   (and (robotat ?robot ?from)
+                             (haspremanipulationarea ?from ?to))
+        :effect         (and (not (robotat ?robot ?from))
+                             (robotat ?robot ?to))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action pick_up_object
+        :parameters     (?robot - robot ?ma - area ?obj - object ?pa - placingarea ?arm - arm ?ap - armposture ?torso - torso ?tp - torsoposture)
+        :static         (and (reachable ?pa ?ma)
+                             (armtosideposture ?ap)
+                             (torsoupposture ?tp))
+        :precondition   (and (robotat ?robot ?ma)
+                             (on ?obj ?pa)
+                             (objectobserved ?obj ?pa)
+                             (hasarmposture ?arm ?ap)
+                             (armfree ?arm)
+                             (hastorsoposture ?torso ?tp))
+        :effect         (and (not (objectobserved ?obj ?pa))
+                             (not (on ?obj ?pa))
+                             (not (armfree ?arm))
+                             (holding ?arm ?obj))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action place_object
+        :parameters     (?robot - robot ?ma - area ?obj - object ?pa - placingarea ?arm - arm ?ap - armposture ?torso - torso ?tp - torsoposture)
+        :static         (and (reachable ?pa ?ma)
+                             (armtosideposture ?ap)
+                             (torsoupposture ?tp))
+        :precondition   (and (robotat ?robot ?ma)
+                             (hasarmposture ?arm ?ap)
+                             (holding ?arm ?obj)
+                             (hastorsoposture ?torso ?tp))
+        :effect         (and (not (holding ?arm ?obj))
+                             (armfree ?arm)
+                             (on ?obj ?pa))
+    )
+
+    ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (:action observe_object_on_area
+        :parameters     (?robot - robot ?ma - area ?obj - object ?pa - placingarea)
+        :static         (reachable ?pa ?ma)
+        :precondition   (and (robotat ?robot ?ma)
+                             (on ?obj ?pa))
+        :effect              (objectobserved ?obj ?pa)
+    )
+
+)

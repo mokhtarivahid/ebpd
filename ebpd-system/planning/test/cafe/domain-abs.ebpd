@@ -1,0 +1,173 @@
+(define (domain cafe)
+ (:requirements :strips :typing)
+ (:types guest robot movearea placearea seatarea arm kitchenware furniture robotposture)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (:constants
+    floorarea1 manipulationareanorthtable1 manipulationareasouthtable1 manipulationareaeasttable2 manipulationareawesttable2 manipulationareaeastcounter1 premanipulationareanorthtable1 premanipulationareasouthtable1 premanipulationareaeastcounter1 premanipulationareaeasttable2 premanipulationareawesttable2 - movearea
+    placingareaeastrightcounter1 placingareaeastrighttable1 placingareaeastlefttable1 placingareasouthrighttable2 placingareasouthlefttable2 placingareawestlefttable1 placingareawestrighttable1 placingareanorthrighttable2 placingareanorthlefttable2 tray1 - placearea
+    sittingareawesttable1 sittingareaeasttable1 sittingareanorthtable2 sittingareasouthtable2 - seatarea
+    guest1 - guest
+    robot1 - robot
+    arm1 - arm
+    mug1 mug2 mug3 mug4 mug5 mug6 plate1 plate2 plate3 plate4 plate5 plate6 - kitchenware
+    counter1 table1 table2 - furniture
+    armtucked armuntucked armtoside armtocarry torsoup torsodown torsomiddle gripperfree gripperholding - robotposture
+ )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (:predicates
+    ;; static predicates
+    (premanipulationarea ?pma - movearea)
+    (manipulationarea ?ma - movearea)
+    (placingarea ?pa - placearea)
+    (tray ?pa - placearea)
+    (sittingarea ?sa - seatarea)
+    (leftplacingarea ?pa - placearea)  ;; leftplacingarea
+    (rightplacingarea ?pa - placearea) ;; rightplacingarea
+
+    (table ?t - furniture)
+    (counter ?c - furniture)
+
+    (hasmanipulationarea ?pma ?ma - movearea)
+
+    (tablemanipulationarea ?table - furniture ?ma - movearea)
+    (tablepremanipulationarea ?table - furniture ?pma - movearea)
+    (tableplacingarea ?table - furniture ?pa - placearea)
+    (tablesittingarea ?table - furniture ?sa - seatarea)
+
+    (hasleftplacingarea ?sa - seatarea ?pa - placearea)  ;; sittingarea has leftplacingarea
+    (hasrightplacingarea ?sa - seatarea ?pa - placearea) ;; sittingarea has rightplacingarea
+
+    (guestat ?guest - guest ?at - seatarea) ;; guest at sittingarea
+
+    (reachable ?ma - movearea ?pa - placearea)
+
+    (torsoposture ?tp - robotposture)
+    (armposture ?ap - robotposture)
+    (gripperposture ?gp - robotposture)
+
+    ;; dynamic predicates
+    (robotat ?robot - robot ?at - movearea) ;; robotat pre/manipulationarea
+
+    (objectat ?obj - kitchenware ?pa - placearea) ;; object at placingarea
+
+    (robotarmposture ?arm - arm ?ap - robotposture)
+    (robottorsoposture ?robot - robot ?t - robotposture)
+    (armgripperposture ?arm - arm ?ag - robotposture)
+
+    (armholding ?arm - arm ?obj - kitchenware)
+
+ )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;; move a robot when nothing is held by the robot,
+    ;; so, torso is down and arm is tucked
+    (:action move
+        :parameters (?from ?to - movearea)
+        :parent     (move (?from ?to))
+        :static     (and
+                            (premanipulationarea ?from)
+                            (premanipulationarea ?to)
+                    )
+        :precondition   (and 
+                            (robotat robot1 ?from)
+                            (not (= ?from ?to)))
+        :effect         (and
+                            (not (robotat robot1 ?from))
+                            (robotat robot1 ?to))
+    )
+
+    (:action move
+        :parameters (?from ?to - movearea)
+        :parent     (move (?from ?to))
+        :static     (and
+                            (premanipulationarea ?from)
+                            (manipulationarea ?to)
+                            (hasmanipulationarea ?from ?to)
+                    )
+        :precondition   (robotat robot1 ?from)
+        :effect         (and
+                            (not (robotat robot1 ?from))
+                            (robotat robot1 ?to))
+    )
+
+    (:action move
+        :parameters (?from ?to - movearea)
+        :parent     (move (?from ?to))
+        :static     (and
+                            (manipulationarea ?from)
+                            (premanipulationarea ?to)
+                            (hasmanipulationarea ?to ?from)
+                    )
+        :precondition   (robotat robot1 ?from)
+        :effect         (and
+                            (not (robotat robot1 ?from))
+                            (robotat robot1 ?to))
+    )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+   (:action pick
+        :parameters (?obj - kitchenware ?pa - placearea)
+        :parent     (pick (?obj ?pa))
+        :static     (reachable ?ma ?pa)
+        :precondition   (and 
+                            (objectat ?obj ?pa)
+                            (robotat robot1 ?ma)
+                            (armgripperposture arm1 gripperfree)
+                        )
+        :effect         (and
+                            (not (objectat ?obj ?pa))
+                            (not (armgripperposture arm1 gripperfree))
+                            (armholding arm1 ?obj)
+                            (armgripperposture arm1 gripperholding))
+    )
+
+    (:action place
+        :parameters (?obj - kitchenware ?pa - placearea)
+        :parent     (place (?obj ?pa))
+        :static     (reachable ?ma ?pa)
+        :precondition   (and
+                            (armholding arm1 ?obj)
+                            (robotat robot1 ?ma)
+                            (armgripperposture arm1 gripperholding)
+                        )
+        :effect         (and
+                            (not (armholding arm1 ?obj))
+                            (not (armgripperposture arm1 gripperholding))
+                            (objectat ?obj ?pa)
+                            (armgripperposture arm1 gripperfree))
+    )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+   (:action pick
+        :parameters (?obj - kitchenware ?pa - placearea)
+        :parent     (pick (?obj ?pa))
+        :static     (tray ?pa)
+        :precondition   (and 
+                            (objectat ?obj ?pa)
+                            (armgripperposture arm1 gripperfree)
+                        )
+        :effect         (and
+                            (not (objectat ?obj ?pa))
+                            (not (armgripperposture arm1 gripperfree))
+                            (armholding arm1 ?obj)
+                            (armgripperposture arm1 gripperholding))
+    )
+
+    (:action place
+        :parameters (?obj - kitchenware ?pa - placearea)
+        :parent     (place (?obj ?pa))
+        :static     (tray ?pa)
+        :precondition   (and
+                            (armholding arm1 ?obj)
+                            (armgripperposture arm1 gripperholding)
+                        )
+        :effect         (and
+                            (not (armholding arm1 ?obj))
+                            (not (armgripperposture arm1 gripperholding))
+                            (objectat ?obj ?pa)
+                            (armgripperposture arm1 gripperfree))
+    )
+
+)

@@ -1,0 +1,10 @@
+:-assert(plan(
+    %%% clean table1 bin1
+   [move(arm1, bin1, table1),
+    pick(arm1, bottle1, table1),
+    move(arm1, table1, bin1),
+    drop(arm1, bottle1, bin1),
+    move(arm1, bin1, table1),
+    pick(arm1, bottle2, table1),
+    move(arm1, table1, bin1),
+    drop(arm1, bottle2, bin1)])).

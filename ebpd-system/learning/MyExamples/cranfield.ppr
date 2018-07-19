@@ -1,0 +1,25 @@
+
+goal_state(cranfield,
+[
+   fixture_with_product(fix_1,cranfield_benchmark),
+   no_tool_attached(sony_scara),
+   component_assembled(cranf_sp1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_peg1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_peg2,cranfield_benchmark,fix_1),
+   component_assembled(cranf_cb1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_sft1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_lv1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_sp2,cranfield_benchmark,fix_1),
+   component_assembled(cranf_peg3,cranfield_benchmark,fix_1),
+   component_assembled(cranf_peg4,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p1,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p2,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p3,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p4,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p5,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p6,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p7,cranfield_benchmark,fix_1),
+   component_assembled(cranf_p8,cranfield_benchmark,fix_1)
+]).
+
+

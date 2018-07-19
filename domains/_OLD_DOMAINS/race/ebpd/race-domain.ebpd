@@ -1,0 +1,393 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; race domain
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Note: 1) in case of using 'member', 'get_type' and 'get_new_constant' 
+;;;          predicates:
+;;;          - 'member' is written before others
+;;;          - 'get_type' is written before 'get_new_constant'
+;;;          - if there is 'member', 'get_type' is not necessary
+;;;       2) 'or' is supported but not in conjunction with other 'and' 'or'
+;;;       3) in case of using '=' predicates:
+;;;          - they are only used alone (i.e. they are not used in a conjunction
+;;;            list)
+;;;          - they are inserted at the end of either precondition or effect 
+;;;            lists
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;; 27 April 2015
+;;; representation of 'on' and 'holding' predicates have been updated 
+;;; in this version no new fluents are generated for 'on' and 'holding'
+
+(define (domain race)
+    (:requirements :strips :typing :fluents :race)
+    (:types
+            scenobject - thing
+            conceptualobject physicalentity - scenobject
+            occurrence - conceptualobject
+            robotposture constrainedstate - occurrence
+            spatialconstrain - constrainedstate
+            on at robotat roboton - spatialconstrain
+            armposture armsposture gripperposture holding torsoposture - robotposture
+            armunnamedposture armcarryposture armtosideposture armuntuckedposture armtuckedposture - armposture
+            leftarmcarryposture rightarmcarryposture - armcarryposture
+            armstuckedposture armsuntuckedposture - armsposture
+            gripperclosedposture gripperholdingposture gripperopenedposture - gripperposture
+            holdingmug - holding
+            torsodownposture torsomiddleposture torsoupposture - torsoposture
+            agent passiveobject specialentity - physicalentity
+            person robot - agent
+            guest instructor waiter - agent
+            artificialbodypart furniture kitchenware - passiveobject
+            arm gripper torso - artificialbodypart
+            counter table - furniture
+            fork knife spoon cup mug glass plate tray vase - kitchenware
+            area subspace - specialentity
+            manipulationarea premanipulationarea sittingarea placingarea floorarea - area
+            manipulationareaeast manipulationareanorth manipulationareasouth manipulationareawest - manipulationarea
+            premanipulationareaeast premanipulationareanorth premanipulationareasouth premanipulationareawest - premanipulationarea
+            sittingareaeast sittingareanorth sittingareasouth sittingareawest - sittingarea
+            placingareaeast placingareanorth placingareasouth placingareawest - placingarea
+
+            area furniture - hasmareatype
+            ;premanipulationarea manipulationarea floorarea - movebasearea)
+            premanipulationarea floorarea - movebasearea)
+
+    (:constants leftarm1 rightarm1 - arm
+                counter1 - counter
+                table1 table2 exttable1 - table
+                floorareatamsrestaurant1 - floorarea
+                manipulationareanorthtable1 manipulationareasouthtable1 manipulationareaeasttable2 manipulationareawesttable2 manipulationareaeastcounter1 - manipulationarea
+                premanipulationareanorthtable1 premanipulationareasouthtable1 premanipulationareaeastcounter1 premanipulationareaeasttable2 premanipulationareawesttable2 - premanipulationarea
+                placingareaeastrightcounter1 placingareaeastrighttable1 placingareaeastlefttable1 - placingareaeast
+                placingareasouthrighttable2 placingareasouthlefttable2 - placingareasouth
+                placingareawestlefttable1 placingareawestrighttable1 - placingareawest
+                placingareanorthrighttable2 placingareanorthlefttable2 - placingareanorth
+                sittingareawesttable1 sittingareaeasttable1 sittingareanorthtable2 sittingareasouthtable2 - sittingarea
+                mug1 mug2 mug3 mug4 mug5 - mug
+                guest1 - guest
+                leftgripper1 rightgripper1 - gripper
+                torso1 - torso
+                trixi1 - robot)
+
+    (:predicates
+                (robotat ?robot - robot ?a - movebasearea)
+                (holding ?gripper - gripper ?obj - kitchenware)
+
+                (instance ?type - thing ?obj - thing)
+                (hasmanipulationarea ?entity - hasmareatype ?man - manipulationarea)
+                (hasmanipulationareaeast ?fur - furniture ?man - premanipulationareaeast)
+                (hasmanipulationareawest ?t - table ?man - premanipulationareawest)
+                (hasmanipulationareasouth ?t - table ?man - premanipulationareasouth)
+                (hasmanipulationareanorth ?t - table ?man - premanipulationareanorth)
+
+                (haspremanipulationarea ?entity - hasmareatype ?pman - premanipulationarea)
+                (haspremanipulationareaeast ?fur - furniture ?man - premanipulationareaeast)
+                (haspremanipulationareawest ?t - table ?man - premanipulationareawest)
+                (haspremanipulationareasouth ?t - table ?man - premanipulationareasouth)
+                (haspremanipulationareanorth ?t - table ?man - premanipulationareanorth)
+
+                (hasplacingarea ?fur - furniture ?pa - placingarea)
+                (hasplacingareaeastleft ?fur - furniture ?pa - placingareaeast)
+                (hasplacingareaeastright ?fur - furniture ?pa - placingareaeast)
+                (hasplacingareanorthleft ?t - table ?pa - placingareanorth)
+                (hasplacingareanorthright ?t - table ?pa - placingareanorth)
+                (hasplacingareasouthleft ?t - table ?pa - placingareasouth)
+                (hasplacingareasouthright ?t - table ?pa - placingareasouth)
+                (hasplacingareawestleft ?t - table ?pa - placingareawest)
+                (hasplacingareawestright ?t - table ?pa - placingareawest)
+
+                (hassittingarea ?t - table ?sa - sittingarea)
+
+                (hasarea ?sc - spatialconstrain ?area - area)
+                (hasphysicalentity ?sc - spatialconstrain ?obj - physicalentity)
+                (hasrobot ?sc - spatialconstrain ?r - robot)
+
+                (hasarmposture ?arm - arm ?ap - armposture)
+                (hasgripper ?arm - arm ?g - gripper)
+                (hasgripperposture ?g - gripper ?gp - gripperposture)
+                (hastorsoposture ?t - torso ?tp - torsoposture)
+
+                (hasblock ?man - manipulationarea ?ext - table)
+
+                (at ?g - guest ?sa - sittingarea))
+
+    ; tuck_arms  - takes parameter armtuckedposture or armuntuckedposture for the left and for the right arm.
+    (:action tuck_arms
+        :parameters     (?lpt ?rpt ?lp ?rp ?glpt ?grpt ?glp ?grp - armposture)
+        ;:parent         (move_arms (?lp ?rp ?glp ?grp))
+        :parent         (nil ())
+        :static         ()
+        :precondition   (and
+                            (instance ?lpt ?lp)
+                            (instance ?rpt ?rp)
+                            (hasarmposture leftarm1 ?lp)
+                            (hasarmposture rightarm1 ?rp)
+                            (or (not (= ?lpt ?glpt)) (not (= ?rpt ?grpt))))
+        :effect         (and
+                            (not (hasarmposture leftarm1 ?lp))
+                            (not (hasarmposture rightarm1 ?rp))
+                            (not (instance ?lpt ?lp))
+                            (not (instance ?rpt ?rp))
+                            (member ?glpt armuntuckedposture armtuckedposture)
+                            (member ?grpt armuntuckedposture armtuckedposture)
+                            ;(get_type armposture ?glpt)
+                            ;(get_type armposture ?grpt)
+                            (get_new_constant ?glpt ?glp)
+                            (get_new_constant ?grpt ?grp)
+                            (instance ?glpt ?glp)
+                            (instance ?grpt ?grp)
+                            (hasarmposture leftarm1 ?glp)
+                            (hasarmposture rightarm1 ?grp))
+    )
+
+    (:action move_arms_to_carryposture
+        :parameters     (?lpt ?rpt ?lp ?rp ?glp ?grp - armposture)
+        ;:parent         (move_arms (?lp ?rp ?glp ?grp))
+        :parent         (nil ())
+        :static         (and
+                            (instance torso ?t))
+        :precondition   (and
+                            (hasarmposture leftarm1 ?lp)
+                            (hasarmposture rightarm1 ?rp)
+                            (instance ?lpt ?lp)
+                            (instance ?rpt ?rp)
+                            ;(instance holding ?holding)
+                            (holding ?gripper ?obj)
+                            (hastorsoposture ?t ?tp)
+                            (not (instance torsodownposture ?tp)))
+        :effect         (and
+                            (not (hasarmposture leftarm1 ?lp))
+                            (not (instance ?lpt ?lp))
+                            (not (hasarmposture rightarm1 ?rp))
+                            (not (instance ?rpt ?rp))
+                            (get_new_constant armcarryposture ?glp)
+                            (get_new_constant armcarryposture ?grp)
+                            (hasarmposture leftarm1 ?glp)
+                            (instance armcarryposture ?glp)
+                            (hasarmposture rightarm1 ?grp)
+                            (instance armcarryposture ?grp))
+    )
+
+    ; moves the arm to the side. 
+    ; this doesn't work if both arms are tucked
+    (:action move_arm_to_side
+        :parameters     (?arm - arm ?apt ?ap ?gap - armposture)
+        ;:parent         (move_arm_to_side (?arm ?gap))
+        :parent         (nil ())
+        :static         (and
+                            (instance arm ?arm))
+        :precondition   (and
+                            (hasarmposture ?arm ?ap)
+                            (instance ?apt ?ap)
+                            (hasarmposture leftarm1 ?lp)
+                            (hasarmposture rightarm1 ?rp)
+                            (not (instance armtuckedposture ?lp))
+                            (not (instance armtuckedposture ?rp))
+                            (not (= ?apt armtuckedposture))
+                            (not (= ?apt armtosideposture)))
+        :effect         (and
+                            (not (instance ?apt ?ap))
+                            (not (hasarmposture ?arm ?ap))
+                            (get_new_constant armtosideposture ?gap)
+                            (instance armtosideposture ?gap)
+                            (hasarmposture ?arm ?gap))
+    )
+
+    (:action move_torso
+        :parameters     (?torso - torso ?otpt ?otp ?gtpt ?gtp - torsoposture)
+        ;:parent         (move_torso (?torso ?otp ?gtp))
+        :parent         (nil ())
+        :static         (and
+                            (instance torso ?torso))
+        :precondition   (and
+                            (hastorsoposture ?torso ?otp)
+                            (instance ?otpt ?otp)
+                            (not (= ?otpt ?gtpt)))
+        :effect         (and
+                            (not (hastorsoposture ?torso ?otp))
+                            (not (instance ?otpt ?otp))
+                            (get_type torsoposture ?gtpt)
+                            (get_new_constant ?gtpt ?gtp)
+                            (hastorsoposture ?torso ?gtp)
+                            (instance ?gtpt ?gtp))
+    )
+
+;    (:action move_base
+;        :parameters     (?from ?to - movebasearea)
+;        :parent         (move (?from ?to))
+;        :static         (and
+;                            (instance ?toarea ?to)
+;                            (instance ?fromarea ?from))
+;        :precondition   (and
+;                            (robotat trixi1 ?from)
+;                            (not (= ?from ?to)))
+;        :effect         (and
+;                            (not (robotat trixi1 ?from))
+;                            (robotat trixi1 ?to))
+;    )
+
+    ; move_base while holding an object
+    (:action move_base
+        :parameters     (?from ?to - movebasearea)
+        :parent         (move (?from ?to))
+        :static         (and
+                            (instance ?toarea ?to)
+                            (instance ?fromarea ?from)
+                            ; only for holding
+                            (instance arm ?arm)
+                            (hasgripper ?arm ?gripper))
+        :precondition   (and
+                            ; when robot holds an object
+                            ; torso should be in middle and arms in carry posture
+                            ;(holding ?gripper ?obj)
+                            (hasgripperposture ?gripper ?gp)
+                            (instance gripperholdingposture ?gp)
+
+                            (instance torsomiddleposture ?tp)
+                            (hasarmposture leftarm1 ?glp)
+                            (instance armcarryposture ?glp)
+                            (hasarmposture rightarm1 ?grp)
+                            (instance armcarryposture ?grp)
+
+                            (robotat trixi1 ?from)
+                            (not (= ?from ?to)))
+        :effect         (and
+                            (not (robotat trixi1 ?from))
+                            (robotat trixi1 ?to))
+    )
+
+    ; move_base while no holding objects
+    (:action move_base
+        :parameters     (?from ?to - movebasearea)
+        :parent         (move (?from ?to))
+        :static         (and
+                            (instance ?toarea ?to)
+                            (instance ?fromarea ?from))
+        :precondition   (and
+                            ; when robot does not hold an object
+                            ; torso should be in down and arms in tucked posture
+                            ;(not (holding ?gripper ?obj))
+                            (hasgripperposture leftgripper1 ?lgp)
+                            (hasgripperposture rightgripper1 ?rgp)
+                            (instance ?lgpt ?lgp)
+                            (instance ?rgpt ?rgp)
+                            (not (= ?lgpt gripperholdingposture))
+                            (not (= ?rgpt gripperholdingposture))
+
+                            (instance torsodownposture ?tp)
+                            (hasarmposture leftarm1 ?glp)
+                            (instance armtuckedposture ?glp)
+                            (hasarmposture rightarm1 ?grp)
+                            (instance armtuckedposture ?grp)
+
+                            (robotat trixi1 ?from)
+                            (not (= ?from ?to)))
+        :effect         (and
+                            (not (robotat trixi1 ?from))
+                            (robotat trixi1 ?to))
+    )
+
+    ; move blindly from premanipulation area to manipulation area
+    (:action move_base_blind_to_ma
+        :parameters     (?from - premanipulationarea ?to - manipulationarea)
+        :parent         (move (?from ?to))
+        :static         (and
+                            (instance ?fromarea ?from)
+                            (instance ?toarea ?to)
+                            (haspremanipulationarea ?to ?from))
+        :precondition   (and 
+                            (robotat trixi1 ?from)
+                            (instance torsoupposture ?tp))  ;; torso should be up
+                            ;(not (hasblock ?to ?obs)))
+        :effect         (and
+                            (not (robotat trixi1 ?from))
+                            (robotat trixi1 ?to))
+    )
+
+    ; move blindly from manipulation area to premanipulation area
+    (:action move_base_blind_to_pma
+        :parameters     (?from - manipulationarea ?to - premanipulationarea)
+        :parent         (move (?from ?to))
+        :static         (and
+                            (instance ?fromarea ?from)
+                            (instance ?toarea ?to)
+                            (haspremanipulationarea ?from ?to))
+        :precondition   (and 
+                            (robotat trixi1 ?from))
+        :effect         (and
+                            (not (robotat trixi1 ?from))
+                            (robotat trixi1 ?to))
+    )
+
+    (:action pick_up_object
+        :parameters     (?obj - kitchenware ?arm - arm)
+        :parent         (pick_up (?obj ?pa))
+        :static         (and
+                            (instance manipulationarea ?ma)
+                            (instance placingarea ?pa)
+                            (hasmanipulationarea ?pa ?ma)
+                            (instance arm ?arm)
+                            (hasgripper ?arm ?gripper))
+        :precondition   (and 
+                            (on ?obj ?pa)
+                            (robotat trixi1 ?ma)
+                            (hasarmposture ?arm ?ap)
+                            (instance armtosideposture ?ap)
+                            (instance torsoupposture ?tp)
+                            (hasgripperposture ?gripper ?gp)
+                            (instance ?gpt ?gp)
+                            (not (= ?gpt gripperholdingposture)))
+        :effect         (and
+                            (not (on ?obj ?pa))
+                            (not (instance ?gpt ?gp))
+                            (not (hasgripperposture ?gripper ?gp))
+                            (get_new_constant gripperholdingposture ?ngp)
+                            (instance gripperholdingposture ?ngp)
+                            (hasgripperposture ?gripper ?ngp)
+                            (holding ?gripper ?obj))
+    )
+
+    (:action place_object
+        :parameters     (?obj - kitchenware ?arm - arm ?pa - placingarea)
+        :parent         (place (?obj ?pa))
+        :static         (and
+                            (instance manipulationarea ?ma)
+                            (instance placingarea ?pa)
+                            (hasmanipulationarea ?pa ?ma)
+                            (hasgripper ?arm ?gripper)
+                            (instance arm ?arm))
+        :precondition   (and 
+                            (robotat trixi1 ?ma)
+                            (holding ?gripper ?obj)
+                            (hasarmposture ?arm ?ap)
+                            (instance armtosideposture ?ap)
+                            (instance torsoupposture ?tp)
+                            (hasgripperposture ?gripper ?gp)
+                            (instance ?gpt ?gp)
+                            ;(= ?gpt gripperholdingposture)
+                            )
+        :effect         (and
+                            (not (holding ?gripper ?obj))
+                            (not (hasgripperposture ?gripper ?gp))
+                            (not (instance ?gpt ?gp))
+                            (on ?obj ?pa)
+                            (get_new_constant gripperopenedposture ?ngp)
+                            (instance gripperopenedposture ?ngp)
+                            (hasgripperposture ?gripper ?ngp))
+    )
+
+    (:action observe_objects_on_area
+        :parameters     (?pa - placingarea)
+        ;:parent         (observe (?pa))
+        :parent         (nil ())
+        :static         (and
+                            (instance manipulationarea ?ma)
+                            (instance placingarea ?pa)
+                            (hasmanipulationarea ?pa ?ma))
+        :precondition   (and
+                            (robotat trixi1 ?ma)
+                            (on ?obj ?pa))
+        :effect         (instance observe observe)
+    )
+)

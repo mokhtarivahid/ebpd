@@ -1,0 +1,55 @@
+(define (problem gripper_1_2_17)
+
+  (:domain gripper)
+
+  (:objects 
+                  robot1 - robot
+                  gripper1 - gripper
+                  table1 table2 - table
+                  ball1 ball2 ball3 ball4 ball5 ball6 ball7 ball8 ball9 ball10 ball11 ball12 ball13 ball14 ball15 ball16 ball17 - object)
+
+  (:init 
+      (:static 
+                  (reach robot1 table1)
+                  (reach robot1 table2))
+      (:dynamic 
+                  (at robot1 table1)
+                  (free robot1 gripper1)
+                  (on ball1 table1)
+                  (on ball2 table1)
+                  (on ball3 table1)
+                  (on ball4 table1)
+                  (on ball5 table1)
+                  (on ball6 table1)
+                  (on ball7 table1)
+                  (on ball8 table1)
+                  (on ball9 table1)
+                  (on ball10 table1)
+                  (on ball11 table1)
+                  (on ball12 table1)
+                  (on ball13 table1)
+                  (on ball14 table1)
+                  (on ball15 table1)
+                  (on ball16 table1)
+                  (on ball17 table1)))
+
+  (:goal (and
+                  (on ball1 table2)
+                  (on ball2 table2)
+                  (on ball3 table2)
+                  (on ball4 table2)
+                  (on ball5 table2)
+                  (on ball6 table2)
+                  (on ball7 table2)
+                  (on ball8 table2)
+                  (on ball9 table2)
+                  (on ball10 table2)
+                  (on ball11 table2)
+                  (on ball12 table2)
+                  (on ball13 table2)
+                  (on ball14 table2)
+                  (on ball15 table2)
+                  (on ball16 table2)
+                  (on ball17 table2)))
+
+)

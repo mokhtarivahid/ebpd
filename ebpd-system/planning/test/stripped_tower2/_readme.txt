@@ -1,0 +1,1 @@
+it is based on 'stripped_tower' problems but without 'base' property.

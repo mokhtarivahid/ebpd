@@ -1,0 +1,82 @@
+(define (domain logistics)
+
+  (:requirements :strips :typing)
+
+  (:types physobjects locations cities)
+
+  (:predicates 
+                  (object ?o - physobjects)
+                  (truck ?t - physobjects)
+                  (airplane ?p - physobjects)
+                  (vehicle ?v - physobjects)
+                  (location ?l - locations)
+                  (airport ?a - physobjects)
+                  (city ?c - cities)
+                  (loc ?l - locations ?c - cities)
+                  (at ?x - physobjects ?l - locations)
+                  (in ?p - physobjects ?v - physobjects))
+
+
+  (:action load
+    :parameters   (?o - physobjects ?v - physobjects ?l - locations)
+    :parent       (load (?o ?v ?l))
+    :static       (and (object ?o)(vehicle ?v)(location ?l))
+    :precondition (and (at ?v ?l)(at ?o ?l))
+    :effect       (and (in ?o ?v)(not (at ?o ?l))))
+
+  (:action unload
+    :parameters   (?o - physobjects ?v - physobjects ?l - locations)
+    :parent       (unload (?o ?v ?l))
+    :static       (and (object ?o)(vehicle ?v)(location ?l))
+    :precondition (and (at ?v ?l)(in ?o ?v))
+    :effect       (and (at ?o ?l)(not (in ?o ?v))))
+
+  (:action drive
+    :parameters   (?t - physobjects ?l1 - locations ?l2 - locations ?c - cities)
+    :parent       (drive (?t ?l1 ?l2 ?c))
+    :static       (and (truck ?t)(location ?l1)(location ?l2)(city ?c)(loc ?l1 ?c)(loc ?l2 ?c))
+    :precondition (and (at ?t ?l1))
+    :effect       (and (at ?t ?l2)(not (at ?t ?l1))))
+
+  (:action fly
+    :parameters   (?p - physobjects ?a1 - physobjects ?a2 - physobjects)
+    :parent       (fly (?p ?a1 ?a2))
+    :static       (and (airplane ?p)(airport ?a1)(airport ?a2))
+    :precondition (and (at ?p ?a1))
+    :effect       (and (at ?p ?a2)(not (at ?p ?a1))))
+)
+
+;; (define (domain logistics)
+;; 
+;;   (:requirements :strips :typing)
+;; 
+;;   (:types physobjects locations cities)
+;; 
+;;   (:predicates 
+;;                   (object ?o - physobjects)
+;;                   (truck ?t - physobjects)
+;;                   (airplane ?p - physobjects)
+;;                   (vehicle ?v - physobjects)
+;;                   (location ?l - locations)
+;;                   (airport ?a - physobjects)
+;;                   (city ?c - cities)
+;;                   (loc ?l - locations ?c - cities)
+;;                   (at ?x - physobjects ?l - locations)
+;;                   (in ?p - physobjects ?v - physobjects))
+;; 
+;; 
+;;   (:action load
+;;     :parameters   (?o - physobjects ?v - physobjects ?l - locations)
+;;     :parent       (load (?o ?v ?l))
+;;     :static       (and (object ?o)(vehicle ?v)(location ?l))
+;;     :precondition (and (at ?o ?l))
+;;     :effect       (and (in ?o ?v)(not (at ?o ?l))))
+;; 
+;;   (:action unload
+;;     :parameters   (?o - physobjects ?v - physobjects ?l - locations)
+;;     :parent       (unload (?o ?v ?l))
+;;     :static       (and (object ?o)(vehicle ?v)(location ?l))
+;;     :precondition (and (in ?o ?v))
+;;     :effect       (and (at ?o ?l)(not (in ?o ?v))))
+;; 
+;; )

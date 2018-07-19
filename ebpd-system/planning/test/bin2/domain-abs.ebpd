@@ -1,0 +1,27 @@
+(define (domain bin)
+ (:requirements :strips :typing) 
+ (:types place object arm)
+ (:predicates 
+        (at ?a - arm ?x - place)
+        (on ?o - object ?x - place)
+        (in ?o - object ?x - place)
+        (reach ?a - arm ?x - place)
+        (holding ?o - object)
+        (free ?a - arm)
+        (table ?t - place)
+        (bin ?t - place))
+
+   (:action pick
+       :parameters (?o - object ?t - place)
+       :parent     (pick (?o ?t))
+       :static     (table ?t)
+       :precondition (on ?o ?t)
+       :effect (and (holding ?o) (not (on ?o ?t))))
+
+   (:action drop
+       :parameters (?o - object ?t - place)
+       :parent     (drop (?o ?t))
+       :static     (bin ?t)
+       :precondition (holding ?o)
+       :effect (and (in ?o ?t) (not (holding ?o))))
+)

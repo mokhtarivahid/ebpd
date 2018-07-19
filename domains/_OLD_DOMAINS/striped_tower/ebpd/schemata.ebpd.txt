@@ -1,0 +1,59 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(robot_activity_schema
+  (:domain striped_tower)
+  (:method stack        ;;; stack(t1,p2)
+   :parameters  (?_G710 ?_G674)
+   :abstract-plan
+     ((!pick ?_G660 ?_G739 ?_G710) (((end(in ?_G739 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G739 ?_G710)) (static(base ?_G739)) (static(red ?_G739)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G739 ?_G818 ?_G674) (((end(in ?_G739 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G739 ?_G710)) (init(top ?_G818 ?_G674)) (static(base ?_G739)) (static(pallet ?_G818)) (static(pile ?_G674)) (static(red ?_G739)))-())
+      (!pick ?_G660 ?_G891 ?_G710) (((end(in ?_G891 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G891 ?_G710)) (static(blue ?_G891)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G891 ?_G739 ?_G674) (((end(in ?_G739 ?_G674)) (end(in ?_G891 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G739 ?_G710)) (init(ontable ?_G891 ?_G710)) (static(base ?_G739)) (static(blue ?_G891)) (static(pile ?_G674)) (static(red ?_G739)))-())
+      (forall
+      (!pick ?_G660 ?_G1043 ?_G710) (((end(in ?_G1043 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1043 ?_G710)) (static(red ?_G1043)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G1043 ?_G891 ?_G674) (((end(in ?_G891 ?_G674)) (end(in ?_G1043 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G891 ?_G710)) (init(ontable ?_G1043 ?_G710)) (static(blue ?_G891)) (static(pile ?_G674)) (static(red ?_G1043)))-())
+      (!pick ?_G660 ?_G1195 ?_G710) (((end(in ?_G1195 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1195 ?_G710)) (static(blue ?_G1195)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G1195 ?_G1043 ?_G674) (((end(in ?_G1043 ?_G674)) (end(in ?_G1195 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1043 ?_G710)) (init(ontable ?_G1195 ?_G710)) (static(blue ?_G1195)) (static(pile ?_G674)) (static(red ?_G1043)))-()))
+      (!pick ?_G660 ?_G1955 ?_G710) (((end(in ?_G1955 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1955 ?_G710)) (static(red ?_G1955)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G1955 ?_G1803 ?_G674) (((end(in ?_G1803 ?_G674)) (end(in ?_G1955 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1803 ?_G710)) (init(ontable ?_G1955 ?_G710)) (static(blue ?_G1803)) (static(pile ?_G674)) (static(red ?_G1955)))-())
+      (!pick ?_G660 ?_G2107 ?_G710) (((end(in ?_G2107 ?_G674)) (end(top ?_G2107 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G2107 ?_G710)) (static(blue ?_G2107)) (static(table ?_G710)))-())
+      (!stack ?_G660 ?_G2107 ?_G1955 ?_G674) (((end(in ?_G1955 ?_G674)) (end(in ?_G2107 ?_G674)) (end(top ?_G2107 ?_G674)) (init(empty ?_G660)) (init(ontable ?_G1955 ?_G710)) (init(ontable ?_G2107 ?_G710)) (static(blue ?_G2107)) (static(pile ?_G674)) (static(red ?_G1955)))-()))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(robot_activity_schema
+  (:domain striped_tower)
+  (:method unstack_stack        ;;; unstack_stack(p1,p2)
+   :parameters  (?_G939 ?_G2387)
+   :abstract-plan
+     ((!unstack ?_G925 ?_G968 ?_G975 ?_G939) (((end(in ?_G968 ?_G2387)) (end(in ?_G975 ?_G2387)) (end(top ?_G968 ?_G2387)) (init(empty ?_G925)) (init(in ?_G968 ?_G939)) (init(in ?_G975 ?_G939)) (init(top ?_G968 ?_G939)) (static(blue ?_G968)) (static(blue ?_G975)) (static(pile ?_G939)))-())
+      (!put ?_G925 ?_G968 ?_G932) (((end(in ?_G968 ?_G2387)) (end(top ?_G968 ?_G2387)) (init(empty ?_G925)) (init(in ?_G968 ?_G939)) (init(top ?_G968 ?_G939)) (static(blue ?_G968)) (static(table ?_G932)))-())
+      (forall
+      (!unstack ?_G925 ?_G975 ?_G1127 ?_G939) (((end(in ?_G975 ?_G2387)) (end(in ?_G1127 ?_G2387)) (init(empty ?_G925)) (init(in ?_G975 ?_G939)) (init(in ?_G1127 ?_G939)) (static(blue ?_G975)) (static(blue ?_G1127)) (static(pile ?_G939)))-())
+      (!put ?_G925 ?_G975 ?_G932) (((end(in ?_G975 ?_G2387)) (init(empty ?_G925)) (init(in ?_G975 ?_G939)) (static(blue ?_G975)) (static(table ?_G932)))-()))
+      (!unstack ?_G925 ?_G1431 ?_G1583 ?_G939) (((end(in ?_G1431 ?_G2387)) (end(in ?_G1583 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1431 ?_G939)) (init(in ?_G1583 ?_G939)) (static(blue ?_G1431)) (static(pile ?_G939)) (static(red ?_G1583)))-())
+      (!put ?_G925 ?_G1431 ?_G932) (((end(in ?_G1431 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1431 ?_G939)) (static(blue ?_G1431)) (static(table ?_G932)))-())
+      (forall
+      (!unstack ?_G925 ?_G1583 ?_G1735 ?_G939) (((end(in ?_G1583 ?_G2387)) (end(in ?_G1735 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1583 ?_G939)) (init(in ?_G1735 ?_G939)) (static(pile ?_G939)) (static(red ?_G1583)) (static(red ?_G1735)))-())
+      (!put ?_G925 ?_G1583 ?_G932) (((end(in ?_G1583 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1583 ?_G939)) (static(red ?_G1583)) (static(table ?_G932)))-()))
+      (!unstack ?_G925 ?_G2039 ?_G2191 ?_G939) (((end(in ?_G2039 ?_G2387)) (end(in ?_G2191 ?_G2387)) (init(empty ?_G925)) (init(in ?_G2039 ?_G939)) (init(in ?_G2191 ?_G939)) (static(base ?_G2191)) (static(pile ?_G939)) (static(red ?_G2039)) (static(red ?_G2191)))-())
+      (!put ?_G925 ?_G2039 ?_G932) (((end(in ?_G2039 ?_G2387)) (init(empty ?_G925)) (init(in ?_G2039 ?_G939)) (static(red ?_G2039)) (static(table ?_G932)))-())
+      (!unstack ?_G925 ?_G2191 ?_G2343 ?_G939) (((end(in ?_G2191 ?_G2387)) (end(top ?_G2343 ?_G939)) (init(empty ?_G925)) (init(in ?_G2191 ?_G939)) (static(base ?_G2191)) (static(pallet ?_G2343)) (static(pile ?_G939)) (static(red ?_G2191)))-())
+      (!stack ?_G925 ?_G2191 ?_G2423 ?_G2387) (((end(in ?_G2191 ?_G2387)) (init(empty ?_G925)) (init(in ?_G2191 ?_G939)) (init(top ?_G2423 ?_G2387)) (static(base ?_G2191)) (static(pallet ?_G2423)) (static(pile ?_G2387)) (static(red ?_G2191)))-())
+      (!pick ?_G925 ?_G1431 ?_G932) (((end(in ?_G1431 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1431 ?_G939)) (static(blue ?_G1431)) (static(table ?_G932)))-())
+      (!stack ?_G925 ?_G1431 ?_G2191 ?_G2387) (((end(in ?_G1431 ?_G2387)) (end(in ?_G2191 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1431 ?_G939)) (init(in ?_G2191 ?_G939)) (static(base ?_G2191)) (static(blue ?_G1431)) (static(pile ?_G2387)) (static(red ?_G2191)))-())
+      (forall
+      (!pick ?_G925 ?_G2039 ?_G932) (((end(in ?_G2039 ?_G2387)) (init(empty ?_G925)) (init(in ?_G2039 ?_G939)) (static(red ?_G2039)) (static(table ?_G932)))-())
+      (!stack ?_G925 ?_G2039 ?_G1431 ?_G2387) (((end(in ?_G1431 ?_G2387)) (end(in ?_G2039 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1431 ?_G939)) (init(in ?_G2039 ?_G939)) (static(blue ?_G1431)) (static(pile ?_G2387)) (static(red ?_G2039)))-())
+      (!pick ?_G925 ?_G1279 ?_G932) (((end(in ?_G1279 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1279 ?_G939)) (static(blue ?_G1279)) (static(table ?_G932)))-())
+      (!stack ?_G925 ?_G1279 ?_G2039 ?_G2387) (((end(in ?_G1279 ?_G2387)) (end(in ?_G2039 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1279 ?_G939)) (init(in ?_G2039 ?_G939)) (static(blue ?_G1279)) (static(pile ?_G2387)) (static(red ?_G2039)))-()))
+      (!pick ?_G925 ?_G1583 ?_G932) (((end(in ?_G1583 ?_G2387)) (init(empty ?_G925)) (init(in ?_G1583 ?_G939)) (static(red ?_G1583)) (static(table ?_G932)))-())
+      (!stack ?_G925 ?_G1583 ?_G975 ?_G2387) (((end(in ?_G975 ?_G2387)) (end(in ?_G1583 ?_G2387)) (init(empty ?_G925)) (init(in ?_G975 ?_G939)) (init(in ?_G1583 ?_G939)) (static(blue ?_G975)) (static(pile ?_G2387)) (static(red ?_G1583)))-())
+      (!pick ?_G925 ?_G968 ?_G932) (((end(in ?_G968 ?_G2387)) (end(top ?_G968 ?_G2387)) (init(empty ?_G925)) (init(in ?_G968 ?_G939)) (init(top ?_G968 ?_G939)) (static(blue ?_G968)) (static(table ?_G932)))-())
+      (!stack ?_G925 ?_G968 ?_G1583 ?_G2387) (((end(in ?_G968 ?_G2387)) (end(in ?_G1583 ?_G2387)) (end(top ?_G968 ?_G2387)) (init(empty ?_G925)) (init(in ?_G968 ?_G939)) (init(in ?_G1583 ?_G939)) (init(top ?_G968 ?_G939)) (static(blue ?_G968)) (static(pile ?_G2387)) (static(red ?_G1583)))-()))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+

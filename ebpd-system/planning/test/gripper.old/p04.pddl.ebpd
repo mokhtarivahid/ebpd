@@ -1,0 +1,28 @@
+(define (problem gripper_1_2_4)
+
+  (:domain gripper)
+
+  (:objects 
+                  robot1 - robot
+                  gripper1 - gripper
+                  table1 table2 - table
+                  ball1 ball2 ball3 ball4 - object)
+
+  (:init 
+      (:static 
+                  (reach robot1 table1)
+                  (reach robot1 table2))
+      (:dynamic 
+                  (at robot1 table1)
+                  (free robot1 gripper1)
+                  (on ball1 table1)
+                  (on ball2 table1)
+                  (on ball3 table1)
+                  (on ball4 table1)))
+
+  (:goal (and
+                  (on ball1 table2)
+                  (on ball2 table2)
+                  (on ball3 table2)
+                  (on ball4 table2)))
+)

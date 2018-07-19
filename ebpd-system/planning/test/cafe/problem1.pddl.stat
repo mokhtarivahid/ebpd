@@ -1,0 +1,7 @@
+problem_name=problem1
+total_time=10
+search_time=10
+evaluated_states=702
+generated_states=0
+memory=5736
+plan_length=19

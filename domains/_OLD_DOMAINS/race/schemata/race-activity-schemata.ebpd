@@ -1,0 +1,13 @@
+(define (schema serve_coffee_to_guest)    ;;; serve_coffee_to_guest(mug1,guest1,counter1)
+  (:domain race)
+  (:parameters (?_G1336 ?_G5078 ?_G5079))
+  (:goal (and (on ?_G1336 ?_G1685) (hasplacingarearight ?_G5197 ?_G1685) (at ?_G5078 ?_G5197)))
+  (:abstract-plan
+      (!move ?_G1096 ?_G1103) (()-())
+      (!move ?_G1103 ?_G1323) (((hasmanipulationarea ?_G5079 ?_G1323))-(((hasplacingarea ?_G5079 ?_G1357) (hasmanipulationarea ?_G1357 ?_G1323)) ((on ?_G1336 ?_G1357) (hasmanipulationarea ?_G1357 ?_G1323))))
+      (!pick_up ?_G1336 ?_G1357) (((on ?_G1336 ?_G1685) (hasplacingarea ?_G5079 ?_G1357) (on ?_G1336 ?_G1357))-(((hasplacingarearight ?_G5197 ?_G1685) (on ?_G1336 ?_G1685)) ((hasmanipulationarea ?_G1357 ?_G1323) (hasmanipulationarea ?_G5079 ?_G1323))))
+      (!move ?_G1323 ?_G1419) (()-(((haspremanipulationarea ?_G1323 ?_G1419) (hasmanipulationarea ?_G5079 ?_G1323))))
+      (!move ?_G1419 ?_G1551) (()-())
+      (!move ?_G1551 ?_G1651) (((hasmanipulationarea ?_G1685 ?_G1651))-(((hasmanipulationarea ?_G1685 ?_G1651) (on ?_G1336 ?_G1685)) ((hasmanipulationarea ?_G5170 ?_G1651) (hasplacingarea ?_G5170 ?_G1685)) ((hasmanipulationareasouth ?_G5170 ?_G1651) (hasplacingarea ?_G5170 ?_G1685)) ((hasplacingarearight ?_G5197 ?_G1685) (hasmanipulationarea ?_G1685 ?_G1651)) ((hasmanipulationarea ?_G5170 ?_G1651) (hassittingarea ?_G5170 ?_G5197)) ((hasmanipulationareasouth ?_G5170 ?_G1651) (hassittingarea ?_G5170 ?_G5197))))
+      (!place ?_G1336 ?_G1685) (((on ?_G1336 ?_G1357) (hasmanipulationarea ?_G1685 ?_G1651) (hasplacingarea ?_G5170 ?_G1685) (on ?_G1336 ?_G1685) (hasplacingarearight ?_G5197 ?_G1685))-(((on ?_G1336 ?_G1357) (hasplacingarea ?_G5079 ?_G1357)) ((hasplacingarearight ?_G5197 ?_G1685) (at ?_G5078 ?_G5197)) ((hasplacingarea ?_G5170 ?_G1685) (hassittingarea ?_G5170 ?_G5197))))
+      (!move ?_G1651 ?_G1747) (()-(((haspremanipulationarea ?_G5170 ?_G1747) (hasplacingarea ?_G5170 ?_G1685)) ((haspremanipulationarea ?_G1651 ?_G1747) (hasmanipulationarea ?_G1685 ?_G1651)) ((haspremanipulationarea ?_G5170 ?_G1747) (hassittingarea ?_G5170 ?_G5197))))))

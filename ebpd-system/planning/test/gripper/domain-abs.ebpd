@@ -1,0 +1,24 @@
+ (define (domain gripper)
+ (:requirements :strips :typing) 
+ (:types room gripper object)
+ (:predicates (room ?r - room)
+              (ball ?b - object)
+              (gripper ?g - gripper)
+              (at_robby ?r - room)
+              (at ?b - object ?r - room)
+              (free ?g - gripper)
+              (carry ?o - object ?g - gripper))
+
+   (:action pick
+       :parameters (?obj - object ?room - room ?gripper - gripper)
+       :parent     (pick  (?obj ?room ?gripper))
+       :static     (and (ball ?obj) (room ?room) (gripper ?gripper))
+       :precondition (and (at ?obj ?room) (free ?gripper))
+       :effect (and (carry ?obj ?gripper) (not (at ?obj ?room)) (not (free ?gripper))))
+
+   (:action drop
+       :parameters (?obj - object ?room - room ?gripper - gripper)
+       :parent     (drop  (?obj ?room ?gripper))
+       :static     (and (ball ?obj) (room ?room) (gripper ?gripper))
+       :precondition (carry ?obj ?gripper)
+       :effect (and (at ?obj ?room) (free ?gripper) (not (carry ?obj ?gripper)))))

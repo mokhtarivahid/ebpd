@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/logistic/domain-abs.ebpd
+test/logistic/log2_2.pddl.ebpd
+--------------------------------------------------------
+logistics
+--------------------------------------------------------
+c2_2([office1,office2])
+--------------------------------------------------------
+[Time(3d),48]
+[Memory(B),252456]
+--------------------------------------------------------
+[Search tree size,25]
+[Nodes expanded,4]
+--------------------------------------------------------
+[Plan,4]
+--------------------------------------------------------
+load(packet2,truck2,office1)
+load(packet1,truck2,office1)
+unload(packet2,truck2,office2)
+unload(packet1,truck2,office2)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[c2_2,[_G614,_G617]]
+[at(_G632,_G617),at(_G1075,_G617),at(_G633,_G700),at(_G918,_G617),at(_G772,_G846)]
+
+[[load(_G632,_G633,_G614),[[at_goal(at(_G632,_G617)),at_start(at(_G632,_G614)),throughout(location(_G614)),throughout(object(_G632)),throughout(truck(_G633)),throughout(vehicle(_G633))]-[]]]]
+[[unload(_G632,_G633,_G700),[[at_goal(at(_G632,_G617)),at_start(at(_G632,_G614)),throughout(airport(_G700)),throughout(location(_G700)),throughout(object(_G632)),throughout(truck(_G633)),throughout(vehicle(_G633))]-[]]]]
+[[load(_G632,_G772,_G700),[[at_goal(at(_G632,_G617)),at_start(at(_G632,_G614)),throughout(airplane(_G772)),throughout(airport(_G700)),throughout(location(_G700)),throughout(object(_G632)),throughout(vehicle(_G772))]-[]]]]
+[[unload(_G632,_G772,_G846),[[at_goal(at(_G632,_G617)),at_start(at(_G632,_G614)),throughout(airplane(_G772)),throughout(airport(_G846)),throughout(location(_G846)),throughout(object(_G632)),throughout(vehicle(_G772))]-[]]]]
+[[load(_G632,_G918,_G846),[[at_goal(at(_G632,_G617)),at_goal(at(_G918,_G617)),at_start(at(_G632,_G614)),throughout(airport(_G846)),throughout(location(_G846)),throughout(object(_G632)),throughout(truck(_G918)),throughout(vehicle(_G918))]-[]]]]
+[[unload(_G632,_G918,_G617),[[at_goal(at(_G632,_G617)),at_goal(at(_G918,_G617)),at_start(at(_G632,_G614)),throughout(location(_G617)),throughout(object(_G632)),throughout(truck(_G918)),throughout(vehicle(_G918))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[c2_2,[office1,office2]]
+[load(packet2,truck2,office1),[[at_goal(at(packet2,office2)),at_start(at(packet2,office1)),throughout(location(office1)),throughout(object(packet2)),throughout(truck(truck2)),throughout(vehicle(truck2))]-[]]]
+[load(packet1,truck2,office1),[[at_goal(at(packet1,office2)),at_start(at(packet1,office1)),throughout(location(office1)),throughout(object(packet1)),throughout(truck(truck2)),throughout(vehicle(truck2))]-[]]]
+[unload(packet2,truck2,office2),[[at_goal(at(packet2,office2)),at_start(at(packet2,office1)),throughout(airport(office2)),throughout(location(office2)),throughout(object(packet2)),throughout(truck(truck2)),throughout(vehicle(truck2))]-[]]]
+[unload(packet1,truck2,office2),[[at_goal(at(packet1,office2)),at_start(at(packet1,office1)),throughout(airport(office2)),throughout(location(office2)),throughout(object(packet1)),throughout(truck(truck2)),throughout(vehicle(truck2))]-[]]]
+--------------------------------------------------------

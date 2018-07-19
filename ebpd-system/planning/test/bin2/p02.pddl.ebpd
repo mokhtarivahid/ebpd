@@ -1,0 +1,26 @@
+(define (problem clean table1 bin1)
+
+  (:domain bin)
+
+  (:objects 
+                  arm1 - arm
+                  table1 bin1 - place
+                  bottle1 bottle2 - object)
+
+  (:init 
+      (:static 
+                  (table table1)
+                  (bin bin1)
+                  (reach arm1 table1)
+                  (reach arm1 bin1))
+      (:dynamic 
+                  (at arm1 table1)
+                  (free arm1)
+                  (on bottle1 table1)
+                  (on bottle2 table1)))
+
+  (:goal (and
+                  (in bottle1 bin1)
+                  (in bottle2 bin1)))
+
+)

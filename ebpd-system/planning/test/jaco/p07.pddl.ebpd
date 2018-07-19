@@ -1,0 +1,38 @@
+(define (problem clear table1 tray1)
+
+  (:domain robotic_arm)
+
+  (:objects 
+                  jaco - arm
+                  table1 tray1 - table
+                  standby grip - arm_state
+                  obj1 obj2 obj3 obj4 obj5 obj6 obj7 - object)
+
+  (:init 
+      (:static 
+                  (arm_canreach jaco table1)
+                  (arm_canreach jaco tray1)
+                  (arm_capabilities jaco grip)
+                  (arm_capabilities jaco standby))
+      (:dynamic 
+                  (arm_at jaco table1)
+                  (arm_active jaco standby)
+                  (arm_free jaco)
+                  (on obj1 table1)
+                  (on obj2 table1)
+                  (on obj3 table1)
+                  (on obj4 table1)
+                  (on obj5 table1)
+                  (on obj6 table1)
+                  (on obj7 table1)))
+
+  (:goal (and
+                  (on obj1 tray1)
+                  (on obj2 tray1)
+                  (on obj3 tray1)
+                  (on obj4 tray1)
+                  (on obj5 tray1)
+                  (on obj6 tray1)
+                  (on obj7 tray1)))
+
+)

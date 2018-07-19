@@ -1,0 +1,73 @@
+(define (problem stack t1 p2)
+
+  (:domain striped_tower)
+
+  (:objects 
+                  l1 - location
+                  h1 - hoist
+                  p1 p2 t1 - place
+                  pallet1 pallet2 b1 b2 b3 b4 b5 r1 r2 r3 r4 r5 - container)
+
+  (:init 
+      (:static 
+                  (pile p1)
+                  (pile p2)
+                  (table t1)
+                  (attached p1 l1)
+                  (attached p2 l1)
+                  (attached t1 l1)
+                  (belong h1 l1)
+                  (pallet pallet1)
+                  (pallet pallet2)
+                  (base r1)
+                  (red r1)
+                  (red r2)
+                  (red r3)
+                  (red r4)
+                  (red r5)
+                  (blue b1)
+                  (blue b2)
+                  (blue b3)
+                  (blue b4)
+                  (blue b5))
+      (:dynamic 
+                  (top pallet1 p1)
+                  (top pallet2 p2)
+                  (ontable r1 t1)
+                  (ontable r2 t1)
+                  (ontable r3 t1)
+                  (ontable r4 t1)
+                  (ontable r5 t1)
+                  (ontable b1 t1)
+                  (ontable b2 t1)
+                  (ontable b3 t1)
+                  (ontable b4 t1)
+                  (ontable b5 t1)
+                  (at h1 t1)
+                  (empty h1)))
+
+  (:goal (and
+                  (top pallet1 p1)
+                  (top b5 p2)
+                  (in r1 p2)
+                  (in r2 p2)
+                  (in r3 p2)
+                  (in r4 p2)
+                  (in r5 p2)
+                  (in b1 p2)
+                  (in b2 p2)
+                  (in b3 p2)
+                  (in b4 p2)
+                  (in b5 p2)
+                  (on r1 pallet2)
+                  (on b1 r1)
+                  (on r2 b1)
+                  (on b2 r2)
+                  (on r3 b2)
+                  (on b3 r3)
+                  (on r4 b3)
+                  (on b4 r4)
+                  (on r5 b4)
+                  (on b5 r5)))
+
+)

@@ -1,0 +1,33 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(robot-activity-schema 
+  (:domain cafe)
+  (:activity-schema ServeACoffee
+   :parameters (?_G144 ?_G174 - table)          ;; ServeACoffee(table1,counter1)
+   :scope ((summary ?_G101) (summary ?_G110) (summary ?_G174) (summary ?_G192) (summary ?_G185) 
+           (summary ?_G146) (static (premanipulationarea ?_G185)) 
+           (static (leftarm ?_G133)) (static (hastorso ?_G137 ?_G176)) 
+           (static (torsodownposture ?_G191)) (static (counter ?_G144)) 
+           (static (rightarm ?_G131)) (maybe (static (hasplacingarea ?_G110 ?_G192))) 
+           (maybe (static (hasplacingarea ?_G174 ?_G101))) (static (hasplacingarea ?_G144 ?_G183)) 
+           (maybe (static (hasplacingarea ?_G174 ?_G192))) (maybe (static (hasplacingarea ?_G110 ?_G101))) 
+           (maybe (init (robotat ?_G137 ?_G185))) (init (on ?_G142 ?_G183)) (static (placingarealeft ?_G192)) 
+           (static (armcarryposture ?_G168)) (maybe (static (hasmanipulationarea ?_G144 ?_G146))) 
+           (maybe (static (hasmanipulationarea ?_G174 ?_G146))) (static (armtosideposture ?_G171)) 
+           (maybe (end (on ?_G142 ?_G101))) (static (placingarearight ?_G101)) (static (torsoupposture ?_G189)) 
+           (maybe (static (hassittingarea ?_G174 ?_G110))) (maybe (static (at ?_G107 ?_G110))) 
+           (init (hastorsoposture ?_G176 ?_G189)) (static (armtuckedposture ?_G167)) (maybe (static (reachable ?_G101 ?_G146))) 
+           (maybe (static (reachable ?_G192 ?_G146))) (maybe (static (reachable ?_G183 ?_G146))) 
+           (static (hasarm ?_G137 ?_G131)) (static (hasarm ?_G137 ?_G133)) (static (table ?_G174)) (init (armfree ?_G131)) (init (armfree ?_G133)) 
+           (maybe (static (haspremanipulationarea ?_G174 ?_G185))) (maybe (static (haspremanipulationarea ?_G144 ?_G185))) 
+           (maybe (static (haspremanipulationarea ?_G146 ?_G185))) (static (torsomiddleposture ?_G193)) (init (hasarmposture ?_G133 ?_G163)) 
+           (init (hasarmposture ?_G131 ?_G163)) (static (manipulationarea ?_G146)) (static (armunnamedposture ?_G163)))
+   :abstract-plan
+     ((move ?_G137 ?_G105 ?_G196) ((init(robotat ?_G137 ?_G105))(static(haspremanipulationarea ?_G144 ?_G196))(static(premanipulationarea ?_G196))(static(premanipulationarea ?_G105)))
+      (move_blind ?_G137 ?_G196 ?_G139) ((static(haspremanipulationarea ?_G144 ?_G196))(static(manipulationarea ?_G139))(static(premanipulationarea ?_G196))(static(haspremanipulationarea ?_G139 ?_G196))(static(hasmanipulationarea ?_G144 ?_G139)))
+      (pick_up ?_G137 ?_G139 ?_G142 ?_G183) ((static(hasmanipulationarea ?_G144 ?_G139))(static(manipulationarea ?_G139))(static(reachable ?_G183 ?_G139))(init(on ?_G142 ?_G183))(static(hasplacingarea ?_G144 ?_G183)))
+      (move_blind ?_G137 ?_G139 ?_G196) ((static(hasmanipulationarea ?_G144 ?_G139))(static(manipulationarea ?_G139))(static(haspremanipulationarea ?_G139 ?_G196))(static(haspremanipulationarea ?_G144 ?_G196))(static(premanipulationarea ?_G196)))
+      (move ?_G137 ?_G196 ?_G121) ((static(haspremanipulationarea ?_G144 ?_G196))(static(premanipulationarea ?_G196))(static(haspremanipulationarea ?_G174 ?_G121))(static(premanipulationarea ?_G121))(end(robotat ?_G137 ?_G121)))
+      (move_blind ?_G137 ?_G121 ?_G146) ((static(haspremanipulationarea ?_G174 ?_G121))(static(premanipulationarea ?_G121))(static(haspremanipulationarea ?_G146 ?_G121))(end(robotat ?_G137 ?_G121))(static(hasmanipulationarea ?_G174 ?_G146))(static(manipulationarea ?_G146)))
+      (place ?_G137 ?_G146 ?_G142 ?_G101) ((static(hasmanipulationarea ?_G174 ?_G146))(static(manipulationarea ?_G146))(static(hasplacingarea ?_G174 ?_G101))(static(placingarearight ?_G101))(static(reachable ?_G101 ?_G146))(end(on ?_G142 ?_G101))))))

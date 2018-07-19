@@ -1,0 +1,34 @@
+(define (problem clean table1 tray1)
+
+  (:domain robotic_arm)
+
+  (:objects 
+                  arm1 - robot
+                  table1 tray1 - location
+                  bottle1 bottle2 bottle3 bottle4 - object)
+
+
+  (:init 
+      (:static 
+                  (bottle bottle1)
+                  (bottle bottle2)
+                  (bottle bottle3)
+                  (bottle bottle4)
+                  (arm arm1)
+                  (table table1)
+                  (tray tray1))
+      (:dynamic 
+                  (on bottle1 table1)
+                  (on bottle2 table1)
+                  (on bottle3 table1)
+                  (on bottle4 table1)
+                  (free arm1)
+                  (at arm1 table1)))
+
+  (:goal (and
+                  (in bottle1 tray1)
+                  (in bottle2 tray1)
+                  (in bottle3 tray1)
+                  (in bottle4 tray1)))
+
+)

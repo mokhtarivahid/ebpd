@@ -1,0 +1,60 @@
+(define (domain stacking-blocks)
+ (:requirements :strips :typing)
+ (:types location table hoist block)
+
+ (:predicates
+   (attached ?p - table ?l - location)  ; pile ?p attached to location ?l
+   (belong ?h - hoist ?l - location)    ; hoist ?h belongs to location ?l
+
+   (pile ?p - table)                    ; table ?p is a pile
+   (table ?t - table)                   ; table ?t is a table
+
+   (at ?h - hoist ?p - table)           ; hoist ?h is at pile ?p
+   (holding ?h - hoist ?c - block)      ; hoist ?h is holding a block ?c
+   (empty ?h - hoist)                   ; hoist ?h is empty
+
+   (top ?c - block ?p - table)          ; block ?c is on top of pile ?p
+   (on ?c1 - block ?c2 - block)         ; block ?c1 is on block ?c2
+
+   (ontable ?c - block ?t - table)      ; block ?c is on table ?t
+
+   (block ?c - block)                   ; ?c is a block
+   (blue ?c - block)                    ; block ?c is blue
+   (red ?c - block)                     ; block ?c is red
+   (pallet ?c - block)                  ; block ?c is a pallet
+   )
+
+ ;; there are 4 operators in this domain:
+
+ ;; takes a block from a pile with a hoist
+ (:action unstack
+     :parameters (?h - hoist ?c - block ?k - block ?p - table)
+     :parent     (unstack (?h ?c ?k ?p))
+     :static     (pile ?p)
+     :precondition (and (empty ?h) (in ?c ?p) (top ?c ?p) (on ?c ?k))
+     :effect (and (holding ?h ?c) (top ?k ?p) (not (in ?c ?p)) (not (top ?c ?p)) (not (on ?c ?k)) (not (empty ?h))))
+
+ ;; puts a block held by a hoist on a nearby pile
+ (:action stack
+     :parameters (?h - hoist ?c - block ?k - block ?p - table)
+     :parent     (stack (?h ?c ?k ?p))
+     :static     (pile ?p)
+     :precondition (and (holding ?h ?c) (top ?k ?p))
+     :effect (and (in ?c ?p) (top ?c ?p) (on ?c ?k) (not (top ?k ?p)) (not (holding ?h ?c)) (empty ?h)))
+
+ ;; takes a block from a table with a hoist
+ (:action pick
+     :parameters (?h - hoist ?c - block ?t - table)
+     :parent     (pick (?h ?c ?t))
+     :static     (table ?t)
+     :precondition (and (empty ?h) (ontable ?c ?t))
+     :effect (and (holding ?h ?c) (not (ontable ?c ?t)) (not (empty ?h))))
+
+ ;; puts a block held by a hoist on a nearby table
+ (:action put
+     :parameters (?h - hoist ?c - block ?t - table)
+     :parent     (put (?h ?c ?t))
+     :static     (table ?t)
+     :precondition (holding ?h ?c)
+     :effect (and (ontable ?c ?t) (not (holding ?h ?c)) (empty ?h)))
+)

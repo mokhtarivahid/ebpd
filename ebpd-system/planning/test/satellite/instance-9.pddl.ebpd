@@ -1,0 +1,66 @@
+(define (problem take_image2 satellite0)
+
+  (:domain satellite)
+
+  (:objects 
+                  satellite0 - tsatellite
+                  instrument0 - tinstrument
+                  instrument1 - tinstrument
+                  image1 - tmode
+                  infrared0 - tmode
+                  spectrograph2 - tmode
+                  star1 - tdirection
+                  star2 - tdirection
+                  star0 - tdirection
+                  star3 - tdirection
+                  star4 - tdirection
+                  phenomenon5 - tdirection
+                  phenomenon6 - tdirection
+                  phenomenon7 - tdirection
+                  phenomenon8 - tdirection
+                  phenomenon9 - tdirection
+                  phenomenon10 - tdirection)
+
+  (:init 
+      (:static 
+                  (direction star1)
+                  (direction star2)
+                  (direction star0)
+                  (direction star3)
+                  (direction star4)
+                  (direction phenomenon5)
+                  (direction phenomenon6)
+                  (direction phenomenon7)
+                  (direction phenomenon8)
+                  (direction phenomenon9)
+                  (direction phenomenon10)
+                  (satellite satellite0)
+                  (instrument instrument0)
+                  (instrument instrument1)
+                  (mode image1)
+                  (mode infrared0)
+                  (mode spectrograph2)
+                  (supports instrument0 spectrograph2)
+                  (supports instrument0 infrared0)
+                  (calibration_target instrument0 star1)
+                  (supports instrument1 image1)
+                  (calibration_target instrument1 star2)
+                  (on_board instrument0 satellite0)
+                  (on_board instrument1 satellite0))
+      (:dynamic 
+                  (power_avail satellite0)
+                  (pointing satellite0 star0)))
+
+  (:goal (and
+                  (have_image star3 infrared0)
+                  (have_image star4 spectrograph2)
+                  (have_image phenomenon5 spectrograph2)
+                  (have_image phenomenon7 image1)
+                  (have_image phenomenon6 image1)
+                  (have_image star1 image1)
+                  (have_image phenomenon8 spectrograph2)
+                  (have_image phenomenon9 image1)
+                  (have_image phenomenon10 spectrograph2)
+            ))
+
+)

@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/robotic_arm/domain-abs.ebpd
+test/robotic_arm/p04.pddl.ebpd
+--------------------------------------------------------
+robotic_arm
+--------------------------------------------------------
+clean([table1,tray1])
+--------------------------------------------------------
+[Time(3d),14]
+[Memory(B),290360]
+--------------------------------------------------------
+[Search tree size,14]
+[Nodes expanded,8]
+--------------------------------------------------------
+[Plan,8]
+--------------------------------------------------------
+pick(arm1,bottle4,table1)
+place(arm1,bottle4,tray1)
+pick(arm1,bottle3,table1)
+place(arm1,bottle3,tray1)
+pick(arm1,bottle2,table1)
+place(arm1,bottle2,tray1)
+pick(arm1,bottle1,table1)
+place(arm1,bottle1,tray1)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[clean,[_G461,_G464]]
+[free(_G479),at(_G479,_G464),in(_G480,_G464),in(_G668,_G464),in(_G674,_G464),in(_G680,_G464)]
+
+[[pick(_G479,_G480,_G461),[[at_goal(free(_G479)),at_goal(at(_G479,_G464)),at_goal(in(_G480,_G464)),at_start(free(_G479)),at_start(at(_G479,_G461)),at_start(on(_G480,_G461)),throughout(arm(_G479)),throughout(bottle(_G480)),throughout(table(_G461))]-[]]],[place(_G479,_G480,_G464),[[at_goal(free(_G479)),at_goal(at(_G479,_G464)),at_goal(in(_G480,_G464)),at_start(free(_G479)),at_start(at(_G479,_G461)),at_start(on(_G480,_G461)),throughout(arm(_G479)),throughout(bottle(_G480)),throughout(tray(_G464))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[clean,[table1,tray1]]
+[pick(arm1,bottle4,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle4,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle4,table1)),throughout(arm(arm1)),throughout(bottle(bottle4)),throughout(table(table1))]-[]]]
+[place(arm1,bottle4,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle4,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle4,table1)),throughout(arm(arm1)),throughout(bottle(bottle4)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle3,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle3,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle3,table1)),throughout(arm(arm1)),throughout(bottle(bottle3)),throughout(table(table1))]-[]]]
+[place(arm1,bottle3,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle3,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle3,table1)),throughout(arm(arm1)),throughout(bottle(bottle3)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle2,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle2,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle2,table1)),throughout(arm(arm1)),throughout(bottle(bottle2)),throughout(table(table1))]-[]]]
+[place(arm1,bottle2,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle2,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle2,table1)),throughout(arm(arm1)),throughout(bottle(bottle2)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle1,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle1,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle1,table1)),throughout(arm(arm1)),throughout(bottle(bottle1)),throughout(table(table1))]-[]]]
+[place(arm1,bottle1,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle1,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle1,table1)),throughout(arm(arm1)),throughout(bottle(bottle1)),throughout(tray(tray1))]-[]]]
+--------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/robotic_arm/domain.ebpd
+test/robotic_arm/p04.pddl.ebpd
+--------------------------------------------------------
+robotic_arm
+--------------------------------------------------------
+clean([table1,tray1])
+--------------------------------------------------------
+[Time(3d),29]
+[Memory(B),778552]
+--------------------------------------------------------
+[Search tree size,29]
+[Nodes expanded,23]
+--------------------------------------------------------
+[Plan,15]
+--------------------------------------------------------
+pick(arm1,bottle4,table1)
+move(arm1,table1,tray1)
+place(arm1,bottle4,tray1)
+move(arm1,tray1,table1)
+pick(arm1,bottle3,table1)
+move(arm1,table1,tray1)
+place(arm1,bottle3,tray1)
+move(arm1,tray1,table1)
+pick(arm1,bottle2,table1)
+move(arm1,table1,tray1)
+place(arm1,bottle2,tray1)
+move(arm1,tray1,table1)
+pick(arm1,bottle1,table1)
+move(arm1,table1,tray1)
+place(arm1,bottle1,tray1)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[clean,[_G427,_G430]]
+[free(_G445),at(_G445,_G430),in(_G446,_G430),in(_G634,_G430),in(_G640,_G430),in(_G646,_G430)]
+
+[[pick(_G445,_G446,_G427),[[at_goal(free(_G445)),at_goal(at(_G445,_G430)),at_goal(in(_G446,_G430)),at_start(free(_G445)),at_start(at(_G445,_G427)),at_start(on(_G446,_G427)),throughout(arm(_G445)),throughout(bottle(_G446)),throughout(table(_G427))]-[]]],[place(_G445,_G446,_G430),[[at_goal(free(_G445)),at_goal(at(_G445,_G430)),at_goal(in(_G446,_G430)),at_start(free(_G445)),at_start(at(_G445,_G427)),at_start(on(_G446,_G427)),throughout(arm(_G445)),throughout(bottle(_G446)),throughout(tray(_G430))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[clean,[table1,tray1]]
+[pick(arm1,bottle4,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle4,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle4,table1)),throughout(arm(arm1)),throughout(bottle(bottle4)),throughout(table(table1))]-[]]]
+[place(arm1,bottle4,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle4,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle4,table1)),throughout(arm(arm1)),throughout(bottle(bottle4)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle3,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle3,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle3,table1)),throughout(arm(arm1)),throughout(bottle(bottle3)),throughout(table(table1))]-[]]]
+[place(arm1,bottle3,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle3,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle3,table1)),throughout(arm(arm1)),throughout(bottle(bottle3)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle2,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle2,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle2,table1)),throughout(arm(arm1)),throughout(bottle(bottle2)),throughout(table(table1))]-[]]]
+[place(arm1,bottle2,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle2,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle2,table1)),throughout(arm(arm1)),throughout(bottle(bottle2)),throughout(tray(tray1))]-[]]]
+[pick(arm1,bottle1,table1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle1,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle1,table1)),throughout(arm(arm1)),throughout(bottle(bottle1)),throughout(table(table1))]-[]]]
+[place(arm1,bottle1,tray1),[[at_goal(free(arm1)),at_goal(at(arm1,tray1)),at_goal(in(bottle1,tray1)),at_start(free(arm1)),at_start(at(arm1,table1)),at_start(on(bottle1,table1)),throughout(arm(arm1)),throughout(bottle(bottle1)),throughout(tray(tray1))]-[]]]
+--------------------------------------------------------

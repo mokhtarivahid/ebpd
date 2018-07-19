@@ -1,0 +1,28 @@
+(define (problem transport rooma roomb)
+
+  (:domain gripper)
+
+  (:objects 
+                  rooma roomb - room
+                  left - gripper
+                  ball1 ball2 - object)
+
+
+  (:init 
+      (:static 
+                  (room rooma)
+                  (room roomb)
+                  (ball ball1)
+                  (ball ball2)
+                  (gripper left))
+      (:dynamic 
+                  (at ball1 rooma)
+                  (at ball2 rooma)
+                  (free left)
+                  (at_robby rooma)))
+
+  (:goal (and
+                  (at ball1 roomb)
+                  (at ball2 roomb)))
+
+)

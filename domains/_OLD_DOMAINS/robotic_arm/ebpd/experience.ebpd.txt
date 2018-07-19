@@ -1,0 +1,32 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (experience clear)
+  (:domain robotic_arm)
+  (:episode_id 110)
+  (:task clear
+   :parameters (table1 tray1)
+   :key-propositions
+       ((init(at arm1 tray1))
+        (init(gripper arm1 close))
+        (init(on cup1 table1))
+        (init(on spoon1 table1))
+        (static(table table1))
+        (static(bin tray1))
+        (static(posture open))
+        (static(posture close))
+        (static(posture carry))
+        (static(reach arm1 table1))
+        (static(reach arm1 tray1))
+        (end(in cup1 tray1))
+        (end(in spoon1 tray1)))
+   :plan
+       ((grip arm1 carry open)
+        (move arm1 tray1 table1)
+        (pick arm1 cup1 table1)
+        (move arm1 table1 tray1)
+        (drop arm1 cup1 tray1)
+        (move arm1 tray1 table1)
+        (pick arm1 spoon1 table1)
+        (move arm1 table1 tray1)
+        (drop arm1 spoon1 tray1))))

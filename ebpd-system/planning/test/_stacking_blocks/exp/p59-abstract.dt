@@ -1,0 +1,30 @@
+digraph Struc {
+node [shape=ellipse];
+packMode="graph";
+  n1 [peripheries=2, label="<b28>\nblock"];
+  n2 [peripheries=2, label="<pallet1>\nblock"];
+  n3 [label="<h1>\nhoist"];
+  n4 [peripheries=2, label="<b14>\nblock"];
+  n5 [label="<l1>\nlocation"];
+  n6 [label="<t1>\ntable"];
+  n7 [peripheries=2, label="<p2>\ntable"];
+n1->n1[label=" static(red)\nstatic(block)\n"];
+n2->n2[label=" static(pallet)\n"];
+n3->n3[label=" init(empty)\n"];
+n4->n4[label=" static(block)\nstatic(blue)\n"];
+n6->n6[label=" static(table)\n"];
+n7->n7[label=" static(pile)\n"];
+  n1->n4 [style=dashed, label=" init(on)\nend(on)\n"];
+  n4->n1 [style=dashed, label=" init(on)\n"];
+  n4->n4 [style=dashed, label=" end(on)\n"];
+  n7->n5 [label=" static(attached)\n"];
+  n2->n7 [style=dashed, label=" end(top)\ninit(top)\n"];
+  n1->n1 [style=dashed, label=" end(on)\n"];
+  n3->n5 [label=" static(belong)\n"];
+  n3->n6 [label=" init(at)\n"];
+  n4->n7 [style=dashed, label=" init(top)\n"];
+  n6->n5 [label=" static(attached)\n"];
+  n1->n7 [style=dashed, label=" end(top)\n"];
+  n4->n2 [style=dashed, label=" end(on)\n"];
+  n1->n2 [style=dashed, label=" init(on)\n"];
+}

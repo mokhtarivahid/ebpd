@@ -1,0 +1,18 @@
+(robot_activity_schema
+  (:domain race)
+  (:method flight        ;;; flight(city0,city1)
+   :parameters  (?_G493 ?_G273)
+   :abstract-plan
+     ((!board ?_G175 ?_G189) (((at_goal(in ?_G2 ?_G7)) (at_start(in ?_G2 ?_G10)))-())
+      (!board ?_G5 ?_G4) (((at_goal(in ?_G5 ?_G7)) (at_start(in ?_G5 ?_G10)))-())
+      (!board ?_G6 ?_G4) (((at_goal(in ?_G6 ?_G7)) (at_start(in ?_G6 ?_G10)))-())
+      (!fly ?_G3 ?_G4 ?_G7) (((at_start(at ?_G3 ?_G10)))-())
+      (!debark ?_G2 ?_G7) (((at_goal(in ?_G2 ?_G7)) (at_start(in ?_G2 ?_G10)))-())
+      (!debark ?_G5 ?_G7) (((at_goal(in ?_G5 ?_G7)) (at_start(in ?_G5 ?_G10)))-())
+      (!debark ?_G6 ?_G7) (((at_goal(in ?_G6 ?_G7)) (at_start(in ?_G6 ?_G10)))-())
+      (!board ?_G8 ?_G7) (((at_goal(in ?_G8 ?_G10)) (at_start(in ?_G8 ?_G7)))-())
+      (!board ?_G9 ?_G7) (((at_goal(in ?_G9 ?_G10)) (at_start(in ?_G9 ?_G7)))-())
+      (!fly ?_G3 ?_G7 ?_G10) (((at_start(at ?_G3 ?_G10)))-())
+      (!debark ?_G8 ?_G10) (((at_goal(in ?_G8 ?_G10)) (at_start(in ?_G8 ?_G7)))-())
+      (!debark ?_G9 ?_G10) (((at_goal(in ?_G9 ?_G10)) (at_start(in ?_G9 ?_G7)))-())
+      )))

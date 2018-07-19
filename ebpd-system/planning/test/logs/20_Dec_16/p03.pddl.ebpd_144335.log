@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/jaco/domain-abs.ebpd
+test/jaco/p03.pddl.ebpd
+--------------------------------------------------------
+robotic_arm
+--------------------------------------------------------
+clear([table1,tray1])
+--------------------------------------------------------
+[Time(3d),9]
+[Memory(B),126224]
+--------------------------------------------------------
+[Search tree size,9]
+[Nodes expanded,6]
+--------------------------------------------------------
+[Plan,6]
+--------------------------------------------------------
+pick(obj3,table1)
+place(obj3,tray1)
+pick(obj2,table1)
+place(obj2,tray1)
+pick(obj1,table1)
+place(obj1,tray1)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[clear,[_G359,_G362]]
+[on(_G377,_G362),on(_G451,_G362),on(_G457,_G362),on(_G463,_G362),on(_G469,_G362),on(_G475,_G362),on(_G481,_G362),on(_G487,_G362)]
+
+[[pick(_G377,_G359),[[at_goal(on(_G377,_G362)),at_start(on(_G377,_G359))]-[]]],[place(_G377,_G362),[[at_goal(on(_G377,_G362)),at_start(on(_G377,_G359))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[clear,[table1,tray1]]
+[pick(obj3,table1),[[at_goal(on(obj3,tray1)),at_start(on(obj3,table1))]-[]]]
+[place(obj3,tray1),[[at_goal(on(obj3,tray1)),at_start(on(obj3,table1))]-[]]]
+[pick(obj2,table1),[[at_goal(on(obj2,tray1)),at_start(on(obj2,table1))]-[]]]
+[place(obj2,tray1),[[at_goal(on(obj2,tray1)),at_start(on(obj2,table1))]-[]]]
+[pick(obj1,table1),[[at_goal(on(obj1,tray1)),at_start(on(obj1,table1))]-[]]]
+[place(obj1,tray1),[[at_goal(on(obj1,tray1)),at_start(on(obj1,table1))]-[]]]
+--------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/jaco/domain.ebpd
+test/jaco/p03.pddl.ebpd
+--------------------------------------------------------
+robotic_arm
+--------------------------------------------------------
+clear([table1,tray1])
+--------------------------------------------------------
+[Time(3d),76]
+[Memory(B),722848]
+--------------------------------------------------------
+[Search tree size,27]
+[Nodes expanded,24]
+--------------------------------------------------------
+[Plan,18]
+--------------------------------------------------------
+activate(jaco,standby,grip)
+detect_pose_pick_up(jaco,obj3,table1)
+pick_up_object(jaco,obj3,table1)
+carry_object(jaco,obj3,table1,tray1)
+detect_pose_place(jaco,obj3,tray1)
+place_object(jaco,obj3,tray1)
+move_arm(jaco,tray1,table1)
+detect_pose_pick_up(jaco,obj2,table1)
+pick_up_object(jaco,obj2,table1)
+carry_object(jaco,obj2,table1,tray1)
+detect_pose_place(jaco,obj2,tray1)
+place_object(jaco,obj2,tray1)
+move_arm(jaco,tray1,table1)
+detect_pose_pick_up(jaco,obj1,table1)
+pick_up_object(jaco,obj1,table1)
+carry_object(jaco,obj1,table1,tray1)
+detect_pose_place(jaco,obj1,tray1)
+place_object(jaco,obj1,tray1)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[clear,[_G322,_G325]]
+[on(_G340,_G325),on(_G414,_G325),on(_G420,_G325),on(_G426,_G325),on(_G432,_G325),on(_G438,_G325),on(_G444,_G325),on(_G450,_G325)]
+
+[[pick(_G340,_G322),[[at_goal(on(_G340,_G325)),at_start(on(_G340,_G322))]-[]]],[place(_G340,_G325),[[at_goal(on(_G340,_G325)),at_start(on(_G340,_G322))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[clear,[table1,tray1]]
+[pick(obj3,table1),[[at_goal(on(obj3,tray1)),at_start(on(obj3,table1))]-[]]]
+[place(obj3,tray1),[[at_goal(on(obj3,tray1)),at_start(on(obj3,table1))]-[]]]
+[pick(obj2,table1),[[at_goal(on(obj2,tray1)),at_start(on(obj2,table1))]-[]]]
+[place(obj2,tray1),[[at_goal(on(obj2,tray1)),at_start(on(obj2,table1))]-[]]]
+[pick(obj1,table1),[[at_goal(on(obj1,tray1)),at_start(on(obj1,table1))]-[]]]
+[place(obj1,tray1),[[at_goal(on(obj1,tray1)),at_start(on(obj1,table1))]-[]]]
+--------------------------------------------------------

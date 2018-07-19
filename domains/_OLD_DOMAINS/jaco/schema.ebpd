@@ -1,0 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(robot_activity_schema
+  (:domain robotic_arm)
+  (:method clear        ;;; clear(table1)
+   :parameters  (?_G151)
+   :abstract-plan
+     ((!pick ?_G144 ?_G151) ((goal(on ?_G144 ?_G214)) (init(arm_at ?_G109 ?_G151)) (static(arm_canreach ?_G109 ?_G151)) (init(on ?_G144 ?_G151)))
+      (!place ?_G144 ?_G214) ((init(on ?_G144 ?_G151)) (static(arm_canreach ?_G109 ?_G214)) (goal(on ?_G144 ?_G214))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(robot_activity_schema
+  (:domain robotic_arm)
+  (:method clear        ;;; clear(table1)
+   :parameters  (?_G192)
+   :abstract-plan
+     ((forall (?_G185)
+	    ((!pick ?_G185 ?_G192) ((goal(on ?_G185 ?_G283)) (init(arm_at ?_G150 ?_G192)) (static(arm_canreach ?_G150 ?_G192)) (init(on ?_G185 ?_G192)) (init(on ?_G241 ?_G192)))
+	     (!place ?_G185 ?_G283) ((init(on ?_G185 ?_G192)) (static(arm_canreach ?_G150 ?_G283)) (goal(on ?_G185 ?_G283)) (goal(on ?_G241 ?_G283))))))))

@@ -1,0 +1,16 @@
+
+:-assert(plan(
+    %%% clean table1 bin1
+    [
+                pick(ball1, rooma, right),
+                pick(ball2, rooma, left),
+                move(rooma, roomb),
+                drop(ball1, roomb, right),
+                drop(ball2, roomb, left),
+                move(roomb, rooma),
+                pick(ball3, rooma, right),
+                pick(ball4, rooma, left),
+                move(rooma, roomb),
+                drop(ball3, roomb, right),
+                drop(ball4, roomb, left)
+    ])).

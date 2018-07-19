@@ -1,0 +1,54 @@
+(define (domain stacking-blocks)
+ (:requirements :strips)
+
+ (:predicates    (pile ?pile)
+                 (table ?table)
+                 (block ?block)
+                 (blue ?block)
+                 (red ?block)
+                 (pallet ?pallet)
+                 (holding ?block)
+                 (top ?block ?table)
+                 (on ?block1 ?block2)
+                 (ontable ?block ?table))
+
+ ;; there are 4 operators in this domain:
+
+ ;; takes a block from a pile
+ (:action unstack
+     :parameters    (?block1 ?block2 ?pile)
+     :static        (pile ?pile)
+     :precondition  (and  (top ?block1 ?pile)
+                          (on ?block1 ?block2))
+     :effect        (and  (holding ?block1)
+                          (top ?block2 ?pile)
+                          (not (top ?block1 ?pile))
+                          (not (on ?block1 ?block2))))
+
+ ;; puts a block on a nearby pile
+ (:action stack
+     :parameters    (?block1 ?block2 ?pile)
+     :static        (pile ?pile)
+     :precondition  (and  (holding ?block1)
+                          (top ?block2 ?pile))
+     :effect        (and  (top ?block1 ?pile)
+                          (on ?block1 ?block2)
+                          (not (top ?block2 ?pile))
+                          (not (holding ?block1))))
+
+ ;; takes a block from a table
+ (:action pick
+     :parameters    (?block ?table)
+     :static        (table ?table)
+     :precondition  (and  (ontable ?block ?table))
+     :effect        (and  (holding ?block)
+                          (not (ontable ?block ?table))))
+
+ ;; puts a block on a nearby table
+ (:action put
+     :parameters    (?block ?table)
+     :static        (table ?table)
+     :precondition  (and  (holding ?block))
+     :effect        (and  (ontable ?block ?table)
+                          (not (holding ?block))))
+)

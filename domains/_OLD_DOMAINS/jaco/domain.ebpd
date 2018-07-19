@@ -1,0 +1,114 @@
+(define (domain robotic_arm)
+
+  (:requirements :strips :typing)
+
+  (:types arm table arm_state object)
+
+  (:predicates 
+                (arm_canreach ?a - arm ?t - table)
+                (arm_capabilities ?a - arm ?t - arm_state)
+                (arm_at ?a - arm ?t - table)
+                (arm_active ?a - arm ?t - arm_state)
+                (arm_holding ?a - arm ?o - object)
+                (arm_free ?a - arm)
+                (on ?o - object ?t - table)
+                (pose_detected ?a - arm ?o - object ?t - table))
+
+  (:action activate
+    :parameters (?a - arm ?old - arm_state ?new - arm_state)
+    :parent     (nil ())
+    :static     (arm_capabilities ?a ?new)
+    :precondition 
+                (arm_active ?a ?old)
+    :effect 
+                (and
+                  (arm_active ?a ?new)
+                  (not (arm_active ?a ?old))))
+
+  (:action detect_pose_object
+    :parameters (?a - arm ?o - object ?t - table)
+    :parent     (nil ())
+    :static     ()
+    :precondition 
+                (and
+                  (arm_at ?a ?t)
+                  (arm_active ?a grip)
+                  (arm_free ?a)
+                  (on ?o ?t))
+    :effect
+                  (pose_detected ?a ?o ?t))
+
+  (:action detect_pose_place
+    :parameters (?a - arm ?o - object ?t - table)
+    :parent     (nil ())
+    :static     ()
+    :precondition 
+                (and
+                  (arm_at ?a ?t)
+                  (arm_active ?a grip)
+                  (arm_holding ?a ?o))
+    :effect 
+                  (pose_detected ?a ?o ?t))
+
+  (:action pick_up_object
+    :parameters (?a - arm ?o - object ?t - table)
+    :parent     (pick (?o ?t))
+    :static     ()
+    :precondition 
+                (and
+                  (arm_at ?a ?t)
+                  (arm_active ?a grip)
+                  (arm_free ?a)
+                  (on ?o ?t)
+                  (pose_detected ?a ?o ?t))
+    :effect 
+                (and
+                  (arm_holding ?a ?o)
+                  (not (arm_free ?a))
+                  (not (on ?o ?t))
+                  (not (pose_detected ?a ?o ?t))))
+
+  (:action place_object
+    :parameters (?a - arm ?o - object ?t - table)
+    :parent     (place (?o ?t))
+    :static     ()
+    :precondition 
+                (and
+                  (arm_at ?a ?t)
+                  (arm_active ?a grip)
+                  (arm_holding ?a ?o)
+                  (pose_detected ?a ?o ?t))
+    :effect 
+                (and
+                  (arm_free ?a)
+                  (on ?o ?t)
+                  (not (arm_holding ?a ?o))
+                  (not (pose_detected ?a ?o ?t))))
+
+  (:action move_arm
+    :parameters (?a - arm ?from - table ?to - table)
+    :parent     (nil ())
+    :static     (arm_canreach ?a ?to)
+    :precondition 
+                (and
+                  (arm_active ?a grip)
+                  (arm_at ?a ?from)
+                  (arm_free ?a))
+    :effect 
+                (and
+                  (arm_at ?a ?to)
+                  (not (arm_at ?a ?from))))
+
+  (:action carry_object
+    :parameters (?a - arm ?o - object ?from - table ?to - table)
+    :parent     (nil ())
+    :static     (arm_canreach ?a ?to)
+    :precondition
+                (and
+                  (arm_at ?a ?from)
+                  (arm_holding ?a ?o))
+    :effect 
+                (and
+                  (arm_at ?a ?to)
+                  (not (arm_at ?a ?from))))
+)

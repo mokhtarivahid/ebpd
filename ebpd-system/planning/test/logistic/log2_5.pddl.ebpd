@@ -1,0 +1,53 @@
+(define (problem logistic office1 office2)
+
+  (:domain logistics)
+
+  (:objects 
+                  city1 city2 - cities
+                  office1 office2 - locations
+                  truck1 truck2 airplane1 airport1 airport2 
+                  packet1 packet2 packet3 packet4 packet5 - physobjects)
+
+  (:init 
+      (:static 
+                  (object packet1)
+                  (object packet2)
+                  (object packet3)
+                  (object packet4)
+                  (object packet5)
+                  (vehicle truck1)
+                  (vehicle truck2)
+                  (vehicle airplane1)
+                  (truck truck1)
+                  (truck truck2)
+                  (airplane airplane1)
+                  (location office1)
+                  (location office2)
+                  (location airport1)
+                  (location airport2)
+                  (airport airport1)
+                  (airport airport2)
+                  (city city1)
+                  (city city2)
+                  (loc office1 city1)
+                  (loc airport1 city1)
+                  (loc office2 city2)
+                  (loc airport2 city2))
+      (:dynamic 
+                  (at packet1 office1)
+                  (at packet2 office1)
+                  (at packet3 office1)
+                  (at packet4 office1)
+                  (at packet5 office1)
+                  (at truck1 airport1)
+                  (at truck2 airport2)
+                  (at airplane1 airport1)))
+
+  (:goal (and
+                  (at packet1 office2)
+                  (at packet2 office2)
+                  (at packet3 office2)
+                  (at packet4 office2)
+                  (at packet5 office2)
+                  ))
+)

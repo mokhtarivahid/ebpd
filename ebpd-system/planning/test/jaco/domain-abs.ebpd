@@ -1,0 +1,34 @@
+(define (domain robotic_arm)
+
+  (:requirements :strips :typing)
+
+  (:types 
+                  arm table arm_state object)
+
+  (:predicates 
+                  (arm_canreach ?a - arm ?t - table)
+                  (arm_capabilities ?a - arm ?t - arm_state)
+
+                  (arm_at ?a - arm ?t - table)
+                  (arm_active ?a - arm ?t - arm_state)
+                  (arm_holding ?a - arm ?o - object)
+                  (arm_free ?a - arm)
+                  (on ?o - object ?t - table)
+                  (pose_detected ?a - arm ?o - object ?t - table))
+
+
+
+  (:action pick
+    :parameters (?o - object ?t - table)
+    :parent       (pick (?o ?t))
+    :static       ()
+    :precondition (on ?o ?t)
+    :effect       (and (arm_holding jaco ?o) (not (on ?o ?t))))
+
+  (:action place
+    :parameters (?o - object ?t - table)
+    :parent       (place (?o ?t))
+    :static       ()
+    :precondition (arm_holding jaco ?o)
+    :effect       (and (on ?o ?t) (not (arm_holding jaco ?o))))
+)

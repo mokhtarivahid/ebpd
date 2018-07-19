@@ -1,0 +1,49 @@
+(define (problem stack t1 p2)
+
+  (:domain blocks)
+
+  (:objects 
+                  l1 - location
+                  h1 - hoist
+                  p1 p2 t1 - place
+                  pallet1 pallet2 b1 b2 r1 r2 - container)
+
+  (:init 
+      (:static 
+                  (pile p1)
+                  (pile p2)
+                  (table t1)
+                  (attached p1 l1)
+                  (attached p2 l1)
+                  (attached t1 l1)
+                  (belong h1 l1)
+                  (pallet pallet1)
+                  (pallet pallet2)
+                  (base r1)
+                  (red r1)
+                  (red r2)
+                  (blue b1)
+                  (blue b2))
+      (:dynamic 
+                  (top pallet1 p1)
+                  (top pallet2 p2)
+                  (ontable r1 t1)
+                  (ontable r2 t1)
+                  (ontable b1 t1)
+                  (ontable b2 t1)
+                  (at h1 t1)
+                  (empty h1)))
+
+  (:goal (and
+                  (top pallet1 p1)
+                  (top b2 p2)
+                  (in r1 p2)
+                  (in r2 p2)
+                  (in b1 p2)
+                  (in b2 p2)
+                  (on r1 pallet2)
+                  (on b1 r1)
+                  (on r2 b1)
+                  (on b2 r2)))
+
+)

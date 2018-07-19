@@ -1,0 +1,24 @@
+(robot_activity_schema
+  (:domain stacking-blocks)
+  (:method stack        ;;; stack(t1,p1)
+   :parameters  (?_G570 ?_G606)
+   :scope ((summary ?_G1323) (summary ?_G1019) (static (red ?_G1323)) (maybe (end (top ?_G1323 ?_G606))) 
+           (static (block ?_G1323)) (static (block ?_G1019)) (init (ontable ?_G1019 ?_G570)) 
+           (init (ontable ?_G1323 ?_G570)) (static (pallet ?_G642)) (static (blue ?_G1019)) 
+           (static (pile ?_G606)) (static (top ?_G642 ?_G606)) (static (table ?_G570)) 
+           (maybe (end (on ?_G1019 ?_G1019))) (maybe (end (on ?_G1323 ?_G1323))) 
+           (maybe (end (on ?_G1323 ?_G1019))) (maybe (end (on ?_G1019 ?_G642))))
+   :abstract-plan
+     ((!pick ?_G556 ?_G563 ?_G570) ((init(ontable ?_G563 ?_G570)) (static(block ?_G563)) (static(blue ?_G563)) (static(table ?_G570)))
+      (!stack ?_G556 ?_G563 ?_G642 ?_G606) ((init(ontable ?_G563 ?_G570)) (init(top ?_G642 ?_G606)) (static(block ?_G563)) (static(blue ?_G563)) (static(pallet ?_G642)) (static(pile ?_G606)))
+      (forall
+      (!pick ?_G556 ?_G715 ?_G570) ((init(ontable ?_G715 ?_G570)) (static(block ?_G715)) (static(blue ?_G715)) (static(table ?_G570)))
+      (!stack ?_G556 ?_G715 ?_G563 ?_G606) ((init(ontable ?_G563 ?_G570)) (init(ontable ?_G715 ?_G570)) (static(block ?_G563)) (static(block ?_G715)) (static(blue ?_G563)) (static(blue ?_G715)) (static(pile ?_G606))))
+      (!pick ?_G556 ?_G1323 ?_G570) ((init(ontable ?_G1323 ?_G570)) (static(block ?_G1323)) (static(red ?_G1323)) (static(table ?_G570)))
+      (!stack ?_G556 ?_G1323 ?_G1171 ?_G606) ((init(ontable ?_G1171 ?_G570)) (init(ontable ?_G1323 ?_G570)) (static(block ?_G1171)) (static(block ?_G1323)) (static(blue ?_G1171)) (static(pile ?_G606)) (static(red ?_G1323)))
+      (forall
+      (!pick ?_G556 ?_G1475 ?_G570) ((init(ontable ?_G1475 ?_G570)) (static(block ?_G1475)) (static(red ?_G1475)) (static(table ?_G570)))
+      (!stack ?_G556 ?_G1475 ?_G1323 ?_G606) ((init(ontable ?_G1323 ?_G570)) (init(ontable ?_G1475 ?_G570)) (static(block ?_G1323)) (static(block ?_G1475)) (static(pile ?_G606)) (static(red ?_G1323)) (static(red ?_G1475))))
+      (!pick ?_G556 ?_G1931 ?_G570) ((end(top ?_G1931 ?_G606)) (init(ontable ?_G1931 ?_G570)) (static(block ?_G1931)) (static(red ?_G1931)) (static(table ?_G570)))
+      (!stack ?_G556 ?_G1931 ?_G1779 ?_G606) ((end(top ?_G1931 ?_G606)) (init(ontable ?_G1779 ?_G570)) (init(ontable ?_G1931 ?_G570)) (static(block ?_G1779)) (static(block ?_G1931)) (static(pile ?_G606)) (static(red ?_G1779)) (static(red ?_G1931)))
+      )))

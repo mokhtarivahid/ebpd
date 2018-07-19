@@ -1,0 +1,52 @@
+(define (problem clean table1 bin1)
+
+  (:domain bin)
+
+  (:objects 
+                  robot1 - robot
+                  table1 bin1 - place
+                  bottle1 bottle2 bottle3 bottle4 bottle5 bottle6 bottle7 bottle8 bottle9 bottle10 bottle11 bottle12 bottle13 - object
+                  open close carry - pose)
+
+  (:init 
+      (:static 
+                  (table table1)
+                  (bin bin1)
+                  (posture open)
+                  (posture close)
+                  (posture carry)
+                  (reach robot1 table1)
+                  (reach robot1 bin1))
+      (:dynamic 
+                  (at robot1 bin1)
+                  (gripper robot1 open)
+                  (on bottle1 table1)
+                  (on bottle2 table1)
+                  (on bottle3 table1)
+                  (on bottle4 table1)
+                  (on bottle5 table1)
+                  (on bottle6 table1)
+                  (on bottle7 table1)
+                  (on bottle8 table1)
+                  (on bottle9 table1)
+                  (on bottle10 table1)
+                  (on bottle11 table1)
+                  (on bottle12 table1)
+                  (on bottle13 table1)))
+
+  (:goal (and
+                  (in bottle1 bin1)
+                  (in bottle2 bin1)
+                  (in bottle3 bin1)
+                  (in bottle4 bin1)
+                  (in bottle5 bin1)
+                  (in bottle6 bin1)
+                  (in bottle7 bin1)
+                  (in bottle8 bin1)
+                  (in bottle9 bin1)
+                  (in bottle10 bin1)
+                  (in bottle11 bin1)
+                  (in bottle12 bin1)
+                  (in bottle13 bin1)))
+
+)

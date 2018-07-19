@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/gripper/domain-abs.ebpd
+test/gripper/p04.pddl.ebpd
+--------------------------------------------------------
+gripper
+--------------------------------------------------------
+transport([rooma,roomb])
+--------------------------------------------------------
+[Time(3d),10]
+[Memory(B),307264]
+--------------------------------------------------------
+[Search tree size,14]
+[Nodes expanded,8]
+--------------------------------------------------------
+[Plan,8]
+--------------------------------------------------------
+pick(ball4,rooma,left)
+drop(ball4,roomb,left)
+pick(ball3,rooma,left)
+drop(ball3,roomb,left)
+pick(ball2,rooma,left)
+drop(ball2,roomb,left)
+pick(ball1,rooma,left)
+drop(ball1,roomb,left)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[transport,[_G459,_G462]]
+[at(_G477,_G462),at(_G616,_G462),at(_G622,_G462),at(_G628,_G462)]
+
+[[pick(_G477,_G459,_G479),[[at_goal(at(_G477,_G462)),at_start(at_robby(_G459)),at_start(free(_G479)),at_start(at(_G477,_G459)),throughout(ball(_G477)),throughout(gripper(_G479)),throughout(room(_G459))]-[]]],[drop(_G477,_G462,_G479),[[at_goal(at(_G477,_G462)),at_start(free(_G479)),at_start(at(_G477,_G459)),throughout(ball(_G477)),throughout(gripper(_G479)),throughout(room(_G462))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[transport,[rooma,roomb]]
+[pick(ball4,rooma,left),[[at_goal(at(ball4,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball4,rooma)),throughout(ball(ball4)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball4,roomb,left),[[at_goal(at(ball4,roomb)),at_start(free(left)),at_start(at(ball4,rooma)),throughout(ball(ball4)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball3,rooma,left),[[at_goal(at(ball3,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball3,rooma)),throughout(ball(ball3)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball3,roomb,left),[[at_goal(at(ball3,roomb)),at_start(free(left)),at_start(at(ball3,rooma)),throughout(ball(ball3)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball2,rooma,left),[[at_goal(at(ball2,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball2,rooma)),throughout(ball(ball2)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball2,roomb,left),[[at_goal(at(ball2,roomb)),at_start(free(left)),at_start(at(ball2,rooma)),throughout(ball(ball2)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball1,rooma,left),[[at_goal(at(ball1,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball1,rooma)),throughout(ball(ball1)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball1,roomb,left),[[at_goal(at(ball1,roomb)),at_start(free(left)),at_start(at(ball1,rooma)),throughout(ball(ball1)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+--------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+test/gripper/domain.ebpd
+test/gripper/p04.pddl.ebpd
+--------------------------------------------------------
+gripper
+--------------------------------------------------------
+transport([rooma,roomb])
+--------------------------------------------------------
+[Time(3d),27]
+[Memory(B),721632]
+--------------------------------------------------------
+[Search tree size,29]
+[Nodes expanded,23]
+--------------------------------------------------------
+[Plan,15]
+--------------------------------------------------------
+pick(ball4,rooma,left)
+move(rooma,roomb)
+drop(ball4,roomb,left)
+move(roomb,rooma)
+pick(ball3,rooma,left)
+move(rooma,roomb)
+drop(ball3,roomb,left)
+move(roomb,rooma)
+pick(ball2,rooma,left)
+move(rooma,roomb)
+drop(ball2,roomb,left)
+move(roomb,rooma)
+pick(ball1,rooma,left)
+move(rooma,roomb)
+drop(ball1,roomb,left)
+--------------------------------------------------------
+[Used activity schema]
+--------------------------------------------------------
+[transport,[_G425,_G428]]
+[at(_G443,_G428),at(_G582,_G428),at(_G588,_G428),at(_G594,_G428)]
+
+[[pick(_G443,_G425,_G445),[[at_goal(at(_G443,_G428)),at_start(at_robby(_G425)),at_start(free(_G445)),at_start(at(_G443,_G425)),throughout(ball(_G443)),throughout(gripper(_G445)),throughout(room(_G425))]-[]]],[drop(_G443,_G428,_G445),[[at_goal(at(_G443,_G428)),at_start(free(_G445)),at_start(at(_G443,_G425)),throughout(ball(_G443)),throughout(gripper(_G445)),throughout(room(_G428))]-[]]]]
+--------------------------------------------------------
+[Instantiated activity schema]
+--------------------------------------------------------
+[transport,[rooma,roomb]]
+[pick(ball4,rooma,left),[[at_goal(at(ball4,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball4,rooma)),throughout(ball(ball4)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball4,roomb,left),[[at_goal(at(ball4,roomb)),at_start(free(left)),at_start(at(ball4,rooma)),throughout(ball(ball4)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball3,rooma,left),[[at_goal(at(ball3,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball3,rooma)),throughout(ball(ball3)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball3,roomb,left),[[at_goal(at(ball3,roomb)),at_start(free(left)),at_start(at(ball3,rooma)),throughout(ball(ball3)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball2,rooma,left),[[at_goal(at(ball2,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball2,rooma)),throughout(ball(ball2)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball2,roomb,left),[[at_goal(at(ball2,roomb)),at_start(free(left)),at_start(at(ball2,rooma)),throughout(ball(ball2)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+[pick(ball1,rooma,left),[[at_goal(at(ball1,roomb)),at_start(at_robby(rooma)),at_start(free(left)),at_start(at(ball1,rooma)),throughout(ball(ball1)),throughout(gripper(left)),throughout(room(rooma))]-[]]]
+[drop(ball1,roomb,left),[[at_goal(at(ball1,roomb)),at_start(free(left)),at_start(at(ball1,rooma)),throughout(ball(ball1)),throughout(gripper(left)),throughout(room(roomb))]-[]]]
+--------------------------------------------------------

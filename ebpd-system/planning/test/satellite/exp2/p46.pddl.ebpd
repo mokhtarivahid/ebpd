@@ -1,0 +1,161 @@
+(define (problem take_image3 satellite0)
+
+  (:domain satellite)
+
+  (:objects 
+                  satellite0 - satellite_t
+                  instrument0 - instrument_t
+                  instrument1 - instrument_t
+                  thermograph4 - mode_t
+                  image1 - mode_t
+                  thermograph0 - mode_t
+                  thermograph3 - mode_t
+                  infrared5 - mode_t
+                  thermograph2 - mode_t
+                  star0 - direction_t
+                  groundstation1 - direction_t
+                  groundstation2 - direction_t
+                  star3 - direction_t
+                  groundstation4 - direction_t
+                  groundstation5 - direction_t
+                  groundstation6 - direction_t
+                  groundstation7 - direction_t
+                  star8 - direction_t
+                  groundstation10 - direction_t
+                  groundstation11 - direction_t
+                  groundstation12 - direction_t
+                  groundstation13 - direction_t
+                  groundstation15 - direction_t
+                  groundstation16 - direction_t
+                  groundstation17 - direction_t
+                  groundstation18 - direction_t
+                  star19 - direction_t
+                  star20 - direction_t
+                  groundstation21 - direction_t
+                  groundstation22 - direction_t
+                  groundstation23 - direction_t
+                  groundstation24 - direction_t
+                  star25 - direction_t
+                  groundstation26 - direction_t
+                  groundstation27 - direction_t
+                  star28 - direction_t
+                  star29 - direction_t
+                  star30 - direction_t
+                  groundstation31 - direction_t
+                  groundstation32 - direction_t
+                  groundstation34 - direction_t
+                  groundstation35 - direction_t
+                  star36 - direction_t
+                  star37 - direction_t
+                  star38 - direction_t
+                  groundstation39 - direction_t
+                  groundstation41 - direction_t
+                  groundstation42 - direction_t
+                  groundstation44 - direction_t
+                  star45 - direction_t
+                  groundstation14 - direction_t
+                  star43 - direction_t
+                  star33 - direction_t
+                  groundstation9 - direction_t
+                  groundstation40 - direction_t
+                  star46 - direction_t)
+
+
+  (:init 
+      (:static 
+                  (satellite satellite0)
+                  (instrument instrument0)
+                  (supports instrument0 thermograph3)
+                  (supports instrument0 thermograph0)
+                  (supports instrument0 image1)
+                  (calibration_target instrument0 star33)
+                  (calibration_target instrument0 star43)
+                  (calibration_target instrument0 groundstation14)
+                  (instrument instrument1)
+                  (supports instrument1 thermograph2)
+                  (supports instrument1 infrared5)
+                  (calibration_target instrument1 groundstation40)
+                  (calibration_target instrument1 groundstation9)
+                  (on_board instrument0 satellite0)
+                  (on_board instrument1 satellite0)
+                  (mode thermograph4)
+                  (mode image1)
+                  (mode thermograph0)
+                  (mode thermograph3)
+                  (mode infrared5)
+                  (mode thermograph2)
+                  (direction star0)
+                  (direction groundstation1)
+                  (direction groundstation2)
+                  (direction star3)
+                  (direction groundstation4)
+                  (direction groundstation5)
+                  (direction groundstation6)
+                  (direction groundstation7)
+                  (direction star8)
+                  (direction groundstation10)
+                  (direction groundstation11)
+                  (direction groundstation12)
+                  (direction groundstation13)
+                  (direction groundstation15)
+                  (direction groundstation16)
+                  (direction groundstation17)
+                  (direction groundstation18)
+                  (direction star19)
+                  (direction star20)
+                  (direction groundstation21)
+                  (direction groundstation22)
+                  (direction groundstation23)
+                  (direction groundstation24)
+                  (direction star25)
+                  (direction groundstation26)
+                  (direction groundstation27)
+                  (direction star28)
+                  (direction star29)
+                  (direction star30)
+                  (direction groundstation31)
+                  (direction groundstation32)
+                  (direction groundstation34)
+                  (direction groundstation35)
+                  (direction star36)
+                  (direction star37)
+                  (direction star38)
+                  (direction groundstation39)
+                  (direction groundstation41)
+                  (direction groundstation42)
+                  (direction groundstation44)
+                  (direction star45)
+                  (direction groundstation14)
+                  (direction star43)
+                  (direction star33)
+                  (direction groundstation9)
+                  (direction groundstation40)
+                  (direction star46))
+      (:dynamic 
+                  (power_avail satellite0)
+                  (pointing satellite0 groundstation21)))
+
+  (:goal (and
+                  (have_image star38 thermograph0)
+                  (have_image star37 infrared5)
+                  (have_image groundstation13 infrared5)
+                  (have_image star19 infrared5)
+                  (have_image star30 infrared5)
+                  (have_image groundstation39 thermograph0)
+                  (have_image groundstation18 infrared5)
+                  (have_image groundstation17 thermograph2)
+                  (have_image groundstation16 thermograph2)
+                  (have_image groundstation15 thermograph2)
+                  (have_image groundstation32 thermograph2)
+                  (have_image groundstation35 infrared5)
+                  (have_image groundstation34 thermograph3)
+                  (have_image groundstation11 image1)
+                  (have_image groundstation10 image1)
+                  (have_image groundstation12 thermograph0)
+                  (have_image star36 thermograph0)
+                  (have_image groundstation7 thermograph3)
+                  (have_image groundstation6 image1)
+                  (have_image groundstation5 thermograph3)
+                  (have_image groundstation4 thermograph0)))
+
+)

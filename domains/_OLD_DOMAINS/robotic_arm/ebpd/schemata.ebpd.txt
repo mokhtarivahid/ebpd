@@ -1,0 +1,8 @@
+(robot_activity_schema
+  (:domain robotic_arm)
+  (:method clear        ;;; (clear table1 tray1)
+   :parameters  (?_G447 ?_G503)
+   :abstract-plan
+     ((forall
+      (!pick ?_G468 ?_G447) (((end(in ?_G468 ?_G503)) (init(on ?_G468 ?_G447)) (static(table ?_G447)))-())
+      (!put ?_G468 ?_G503) (((end(in ?_G468 ?_G503)) (init(on ?_G468 ?_G447)) (static(tray ?_G503)))-())))))
