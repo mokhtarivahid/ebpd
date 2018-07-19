@@ -1,0 +1,7 @@
+problem_name=p48
+total_time=36120
+search_time=13720
+evaluated_states=5524
+generated_states=0
+memory=1391836
+plan_length=192

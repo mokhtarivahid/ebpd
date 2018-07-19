@@ -1,0 +1,7 @@
+problem_name=p42
+total_time=72320
+search_time=60760
+evaluated_states=27337
+generated_states=0
+memory=2729732
+plan_length=328

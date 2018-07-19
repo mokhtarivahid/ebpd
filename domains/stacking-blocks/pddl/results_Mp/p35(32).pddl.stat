@@ -1,0 +1,7 @@
+problem_name=p32
+total_time=25570
+search_time=21510
+evaluated_states=12726
+generated_states=0
+memory=1685312
+plan_length=252

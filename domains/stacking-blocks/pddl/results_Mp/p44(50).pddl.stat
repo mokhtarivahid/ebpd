@@ -1,0 +1,7 @@
+problem_name=p50
+total_time=41650
+search_time=7050
+evaluated_states=5505
+generated_states=0
+memory=926080
+plan_length=199

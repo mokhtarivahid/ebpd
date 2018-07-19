@@ -1,0 +1,7 @@
+problem_name=p44
+total_time=24690
+search_time=5400
+evaluated_states=4464
+generated_states=0
+memory=608092
+plan_length=175
