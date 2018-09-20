@@ -1,0 +1,17 @@
+digraph Struc {
+node [shape=ellipse];
+packMode="graph";
+  n1 [peripheries=2, label="<?_G834>\ninstrument_t"];
+  n2 [label="<?_G518>\nsatellite_t"];
+  n3 [peripheries=2, label="<?_G643>\nmode_t"];
+  n4 [peripheries=2, label="<?_G889>\ndirection_t"];
+n1->n1[label=" static(instrument)\n"];
+n2->n2[label=" static(satellite)\ninit(power_avail)\n"];
+n3->n3[label=" static(mode)\n"];
+n4->n4[label=" static(direction)\n"];
+  n2->n4 [style=dashed, label=" init(pointing)\n"];
+  n1->n3 [style=dashed, label=" static(supports)\n"];
+  n4->n3 [style=dashed, label=" end(have_image)\n"];
+  n1->n4 [style=dashed, label=" static(calibration_target)\n"];
+  n1->n2 [label=" static(on_board)\n"];
+}

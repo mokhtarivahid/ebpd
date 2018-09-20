@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (activity-schema take_image)
+  (:domain satellite)
+  (:parameters  ?_G518 - satellite_t)        ;;; take_image(satellite0)
+  (:objects     ?_G834 ?_G546 - instrument_t ?_G931 ?_G643 - mode_t ?_G813 ?_G729 ?_G601 ?_G525 ?_G532 ?_G889 - direction_t)
+  (:scope 
+                (summary ?_G834) (summary ?_G643) (summary ?_G889) (static (satellite ?_G518)) 
+                (static (direction ?_G889)) (maybe (static (supports ?_G834 ?_G643))) 
+                (static (instrument ?_G834)) (static (mode ?_G643)) 
+                (maybe (end (have_image ?_G889 ?_G643))) (static (on_board ?_G834 ?_G518)) 
+                (maybe (static (calibration_target ?_G834 ?_G889))) 
+                (maybe (init (pointing ?_G518 ?_G889))) (init (power_avail ?_G518)))
+  (:abstract-plan
+                (!turn_to ?_G518 ?_G525 ?_G532) ((init(power_avail ?_G518)) (init(pointing ?_G518 ?_G532)) (static(direction ?_G525)) (static(direction ?_G532)) (static(satellite ?_G518)))
+                (!switch_on ?_G546 ?_G518) ((init(power_avail ?_G518)) (static(instrument ?_G546)) (static(satellite ?_G518)) (static(on_board ?_G546 ?_G518)))
+                (!calibrate ?_G518 ?_G546 ?_G525) ((init(power_avail ?_G518)) (static(direction ?_G525)) (static(instrument ?_G546)) (static(satellite ?_G518)) (static(on_board ?_G546 ?_G518)))
+                (forall (!turn_to ?_G518 ?_G601 ?_G525) ((init(power_avail ?_G518)) (static(direction ?_G525)) (static(direction ?_G601)) (static(satellite ?_G518)))
+                        (!take_image ?_G518 ?_G601 ?_G546 ?_G643) ((init(power_avail ?_G518)) (static(direction ?_G601)) (static(instrument ?_G546)) (static(mode ?_G643)) (static(satellite ?_G518)) (static(on_board ?_G546 ?_G518))))
+                (!switch_off ?_G546 ?_G518) ((init(power_avail ?_G518)) (static(instrument ?_G546)) (static(satellite ?_G518)) (static(on_board ?_G546 ?_G518)))
+                (!turn_to ?_G518 ?_G813 ?_G729) ((init(power_avail ?_G518)) (static(direction ?_G729)) (static(direction ?_G813)) (static(satellite ?_G518)))
+                (!switch_on ?_G834 ?_G518) ((init(power_avail ?_G518)) (static(instrument ?_G834)) (static(satellite ?_G518)) (static(on_board ?_G834 ?_G518)))
+                (!calibrate ?_G518 ?_G834 ?_G813) ((init(power_avail ?_G518)) (static(direction ?_G813)) (static(instrument ?_G834)) (static(satellite ?_G518)) (static(on_board ?_G834 ?_G518)))
+                (forall (!turn_to ?_G518 ?_G889 ?_G813) ((init(power_avail ?_G518)) (static(direction ?_G813)) (static(direction ?_G889)) (static(satellite ?_G518)))
+                        (!take_image ?_G518 ?_G889 ?_G834 ?_G931) ((init(power_avail ?_G518)) (static(direction ?_G889)) (static(instrument ?_G834)) (static(mode ?_G931)) (static(satellite ?_G518)) (static(on_board ?_G834 ?_G518))))))

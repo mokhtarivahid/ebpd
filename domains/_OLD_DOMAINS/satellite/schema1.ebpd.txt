@@ -1,0 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (activity-schema take_image)
+  (:domain satellite)
+  (:parameters  ?_G438 - satellite_t)        ;;; take_image(satellite0)
+  (:objects     ?_G466 - instrument_t ?_G563 ?_G10489 - mode_t ?_G521 ?_G445 ?_G452 ?_G649 - direction_t)
+  (:scope
+                (summary ?_G10489) (summary ?_G649) (static (satellite ?_G438)) 
+                (static (direction ?_G649)) (maybe (static (supports ?_G466 ?_G10489))) 
+                (static (instrument ?_G466)) (static (mode ?_G10489)) 
+                (maybe (end (have_image ?_G649 ?_G10489))) (static (on_board ?_G466 ?_G438)) 
+                (maybe (static (calibration_target ?_G466 ?_G649))) 
+                (maybe (init (pointing ?_G438 ?_G649))) (init (power_avail ?_G438)))
+  (:abstract-plan
+                (!turn_to ?_G438 ?_G445 ?_G452) ((init(power_avail ?_G438)) (init(pointing ?_G438 ?_G452)) (static(direction ?_G445)) (static(direction ?_G452)) (static(satellite ?_G438)))
+                (!switch_on ?_G466 ?_G438) ((init(power_avail ?_G438)) (static(instrument ?_G466)) (static(satellite ?_G438)) (static(on_board ?_G466 ?_G438)))
+                (!calibrate ?_G438 ?_G466 ?_G445) ((init(power_avail ?_G438)) (static(direction ?_G445)) (static(instrument ?_G466)) (static(satellite ?_G438)) (static(on_board ?_G466 ?_G438)))
+                (forall (!turn_to ?_G438 ?_G521 ?_G445) ((init(power_avail ?_G438)) (static(direction ?_G445)) (static(direction ?_G521)) (static(satellite ?_G438)))
+                        (!take_image ?_G438 ?_G521 ?_G466 ?_G563) ((init(power_avail ?_G438)) (static(direction ?_G521)) (static(instrument ?_G466)) (static(mode ?_G563)) (static(satellite ?_G438)) (static(on_board ?_G466 ?_G438))))))

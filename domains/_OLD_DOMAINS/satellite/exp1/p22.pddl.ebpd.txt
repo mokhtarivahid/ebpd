@@ -1,0 +1,88 @@
+(define (problem take_image satellite0)
+
+  (:domain satellite)
+
+  (:objects 
+                  satellite0 - satellite_t
+                  instrument0 - instrument_t
+                  thermograph0 - mode_t
+                  thermograph2 - mode_t
+                  image1 - mode_t
+                  thermograph3 - mode_t
+                  groundstation0 - direction_t
+                  groundstation1 - direction_t
+                  star2 - direction_t
+                  groundstation3 - direction_t
+                  groundstation4 - direction_t
+                  groundstation5 - direction_t
+                  star6 - direction_t
+                  groundstation7 - direction_t
+                  groundstation8 - direction_t
+                  groundstation9 - direction_t
+                  groundstation11 - direction_t
+                  star12 - direction_t
+                  groundstation13 - direction_t
+                  star14 - direction_t
+                  star15 - direction_t
+                  star16 - direction_t
+                  star17 - direction_t
+                  star18 - direction_t
+                  groundstation19 - direction_t
+                  star20 - direction_t
+                  star21 - direction_t
+                  groundstation10 - direction_t
+                  phenomenon22 - direction_t)
+
+
+  (:static 
+                  (satellite satellite0)
+                  (instrument instrument0)
+                  (supports instrument0 thermograph3)
+                  (supports instrument0 image1)
+                  (calibration_target instrument0 groundstation10)
+                  (on_board instrument0 satellite0)
+                  (mode thermograph0)
+                  (mode thermograph2)
+                  (mode image1)
+                  (mode thermograph3)
+                  (direction groundstation0)
+                  (direction groundstation1)
+                  (direction star2)
+                  (direction groundstation3)
+                  (direction groundstation4)
+                  (direction groundstation5)
+                  (direction star6)
+                  (direction groundstation7)
+                  (direction groundstation8)
+                  (direction groundstation9)
+                  (direction groundstation11)
+                  (direction star12)
+                  (direction groundstation13)
+                  (direction star14)
+                  (direction star15)
+                  (direction star16)
+                  (direction star17)
+                  (direction star18)
+                  (direction groundstation19)
+                  (direction star20)
+                  (direction star21)
+                  (direction groundstation10)
+                  (direction phenomenon22))
+  (:init 
+                  (power_avail satellite0)
+                  (pointing satellite0 star14))
+
+  (:goal (and
+                  (have_image star15 image1)
+                  (have_image star14 thermograph3)
+                  (have_image star17 thermograph3)
+                  (have_image star16 thermograph3)
+                  (have_image star12 image1)
+                  (have_image star18 thermograph3)
+                  (have_image groundstation19 image1)
+                  (have_image groundstation13 thermograph3)
+                  (have_image groundstation11 image1)
+                  (have_image groundstation9 image1)
+                  (have_image groundstation8 thermograph3)))
+
+)
