@@ -1,0 +1,20 @@
+(robot_activity_schema
+  (:domain race)
+  (:method rovertask        ;;; rovertask(rover0)
+   :parameters  (?_G598)
+   :abstract-plan
+     ((forall
+      (!calibrate ?_G598 ?_G605 ?_G612 ?_G619) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G605 ?_G598)))-()))
+      (!take_image ?_G598 ?_G619 ?_G684 ?_G605 ?_G698) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G605 ?_G598)))-())
+      (forall
+      (!take_image ?_G598 ?_G619 ?_G728 ?_G641 ?_G742) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G641 ?_G598)))-())
+      (!calibrate ?_G598 ?_G641 ?_G648 ?_G619) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G641 ?_G598)))-()))
+      (!take_image ?_G598 ?_G619 ?_G648 ?_G641 ?_G742) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G641 ?_G598)))-())
+      (!calibrate ?_G598 ?_G641 ?_G648 ?_G619) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G641 ?_G598)))-())
+      (!take_image ?_G598 ?_G619 ?_G968 ?_G641 ?_G822) (((at_start(available ?_G598)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(on_board ?_G641 ?_G598)))-())
+      (forall
+      (!communicate_image_data ?_G598 ?_G1033 ?_G728 ?_G742 ?_G1012 ?_G1061) (((at_goal(communicated_soil_data ?_G1012)) (at_start(at_rock_sample ?_G1012)) (at_start(at_rock_sample ?_G1061)) (at_start(at_soil_sample ?_G1012)) (at_start(available ?_G598)) (at_start(channel_free ?_G1033)) (at_start(at ?_G598 ?_G1061)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(can_traverse ?_G598 ?_G1012 ?_G1061)) (throughout(can_traverse ?_G598 ?_G1061 ?_G1012)))-()))
+      (!communicate_image_data ?_G598 ?_G1033 ?_G968 ?_G822 ?_G1012 ?_G1061) (((at_goal(communicated_soil_data ?_G1012)) (at_start(at_rock_sample ?_G1012)) (at_start(at_rock_sample ?_G1061)) (at_start(at_soil_sample ?_G1012)) (at_start(available ?_G598)) (at_start(channel_free ?_G1033)) (at_start(at ?_G598 ?_G1061)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(can_traverse ?_G598 ?_G1012 ?_G1061)) (throughout(can_traverse ?_G598 ?_G1061 ?_G1012)))-())
+      (!sample_soil ?_G598 ?_G1293 ?_G1012) (((at_goal(communicated_soil_data ?_G1012)) (at_start(at_rock_sample ?_G1012)) (at_start(at_soil_sample ?_G1012)) (at_start(available ?_G598)) (at_start(empty ?_G1293)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(store_of ?_G1293 ?_G598)))-())
+      (!communicate_soil_data ?_G598 ?_G1033 ?_G1012 ?_G1012 ?_G1061) (((at_goal(communicated_soil_data ?_G1012)) (at_start(at_rock_sample ?_G1012)) (at_start(at_rock_sample ?_G1061)) (at_start(at_soil_sample ?_G1012)) (at_start(available ?_G598)) (at_start(channel_free ?_G1033)) (at_start(at ?_G598 ?_G1061)) (throughout(equipped_for_imaging ?_G598)) (throughout(equipped_for_soil_analysis ?_G598)) (throughout(can_traverse ?_G598 ?_G1012 ?_G1061)) (throughout(can_traverse ?_G598 ?_G1061 ?_G1012)))-())
+      )))

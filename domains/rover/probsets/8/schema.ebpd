@@ -1,0 +1,19 @@
+(robot_activity_schema
+  (:domain race)
+  (:method rovertask        ;;; rovertask(rover0)
+   :parameters  (?_G551)
+   :abstract-plan
+     ((forall
+      (!calibrate ?_G551 ?_G558 ?_G565 ?_G572) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G558 ?_G551)))-()))
+      (!take_image ?_G551 ?_G572 ?_G637 ?_G558 ?_G651) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G558 ?_G551)))-())
+      (forall
+      (!take_image ?_G551 ?_G572 ?_G681 ?_G594 ?_G695) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G594 ?_G551)))-())
+      (!calibrate ?_G551 ?_G594 ?_G565 ?_G572) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G594 ?_G551)))-()))
+      (!take_image ?_G551 ?_G572 ?_G841 ?_G594 ?_G855) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G594 ?_G551)))-())
+      (!calibrate ?_G551 ?_G594 ?_G565 ?_G572) (((at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G594 ?_G551)))-())
+      (forall
+      (!communicate_image_data ?_G551 ?_G942 ?_G681 ?_G695 ?_G921 ?_G970) (((at_start(at_rock_sample ?_G921)) (at_start(available ?_G551)) (at_start(channel_free ?_G942)) (at_start(at ?_G551 ?_G970)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(can_traverse ?_G551 ?_G921 ?_G970)) (throughout(can_traverse ?_G551 ?_G970 ?_G921)))-()))
+      (!communicate_image_data ?_G551 ?_G942 ?_G841 ?_G855 ?_G921 ?_G970) (((at_start(at_rock_sample ?_G921)) (at_start(available ?_G551)) (at_start(channel_free ?_G942)) (at_start(at ?_G551 ?_G970)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(can_traverse ?_G551 ?_G921 ?_G970)) (throughout(can_traverse ?_G551 ?_G970 ?_G921)))-())
+      (!take_image ?_G551 ?_G921 ?_G1157 ?_G594 ?_G695) (((at_start(at_rock_sample ?_G921)) (at_start(available ?_G551)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(on_board ?_G594 ?_G551)))-())
+      (!communicate_image_data ?_G551 ?_G942 ?_G1157 ?_G695 ?_G921 ?_G970) (((at_start(at_rock_sample ?_G921)) (at_start(available ?_G551)) (at_start(channel_free ?_G942)) (at_start(at ?_G551 ?_G970)) (throughout(equipped_for_imaging ?_G551)) (throughout(equipped_for_soil_analysis ?_G551)) (throughout(can_traverse ?_G551 ?_G921 ?_G970)) (throughout(can_traverse ?_G551 ?_G970 ?_G921)))-())
+      )))

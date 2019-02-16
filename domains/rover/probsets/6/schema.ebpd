@@ -1,0 +1,14 @@
+(robot_activity_schema
+  (:domain race)
+  (:method rovertask        ;;; rovertask(rover0)
+   :parameters  (?_G488)
+   :abstract-plan
+     ((forall
+      (!calibrate ?_G488 ?_G495 ?_G502 ?_G509) (((at_start(available ?_G488)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(on_board ?_G495 ?_G488)))-())
+      (!take_image ?_G488 ?_G509 ?_G538 ?_G495 ?_G552) (((at_start(available ?_G488)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(on_board ?_G495 ?_G488)))-()))
+      (!calibrate ?_G488 ?_G495 ?_G502 ?_G509) (((at_start(available ?_G488)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(on_board ?_G495 ?_G488)))-())
+      (!take_image ?_G488 ?_G509 ?_G858 ?_G495 ?_G552) (((at_start(available ?_G488)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(on_board ?_G495 ?_G488)))-())
+      (forall
+      (!communicate_image_data ?_G488 ?_G923 ?_G538 ?_G552 ?_G902 ?_G951) (((at_start(available ?_G488)) (at_start(channel_free ?_G923)) (at_start(at ?_G488 ?_G951)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(can_traverse ?_G488 ?_G902 ?_G951)) (throughout(can_traverse ?_G488 ?_G951 ?_G902)))-()))
+      (!communicate_image_data ?_G488 ?_G923 ?_G858 ?_G552 ?_G902 ?_G951) (((at_start(available ?_G488)) (at_start(channel_free ?_G923)) (at_start(at ?_G488 ?_G951)) (throughout(equipped_for_imaging ?_G488)) (throughout(equipped_for_soil_analysis ?_G488)) (throughout(can_traverse ?_G488 ?_G902 ?_G951)) (throughout(can_traverse ?_G488 ?_G951 ?_G902)))-())
+      )))
