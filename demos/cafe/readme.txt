@@ -8,15 +8,8 @@ guest. In the second demo, PR2 picks up two mugs from the counter and moves to
 the both south and north sides of the table and puts mug1 and mug2 in the goal 
 placing areas.
 
-Note that:
-1) The videos are not annotated which we will provide fully annotated videos 
-   for the final version of the paper.
-
-2) For some reason the simulator failed to execute the last action (i.e., place 
-   mug2 on north of the table) in the second demo. We are debugging the code to 
-   resolve that problem and will include videos of demonstrations of the system 
-   in all scenarios for the final version of the paper.
-
+Note that, for some reason the simulator fails to execute the last action 
+(i.e., place mug2 on north of the table) in the second demo. 
 
 
 The abstract and concrete domains, experiences, learned activity schemata, 
