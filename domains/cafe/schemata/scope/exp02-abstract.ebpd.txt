@@ -1,0 +1,36 @@
+{:objects   ?_G255 - sittingarea  ?_G173 ?_G171 - table  ?_G191 - robot 
+   ?_G263 ?_G267 - object  ?_G241 ?_G247 ?_G238 - placingarea 
+   ?_G221 ?_G226 - area  ?_G313 ?_G322 ?_G317 - torsoposture  ?_G188 - torso 
+   ?_G303 ?_G307 ?_G302 ?_G306 - armposture  ?_G204 ?_G203 - arm  ?_G269 - guest 
+  }
+(:precondition
+  (summary ?_G241) (summary ?_G247) (summary ?_G255) (summary ?_G173) 
+  (summary ?_G221) (summary ?_G226) (static (premanipulationarea ?_G221)) 
+  (static (leftarm ?_G203)) (static (hastorso ?_G191 ?_G188)) 
+  (static (torsodownposture ?_G313)) (static (counter ?_G171)) 
+  (static (rightarm ?_G204)) (maybe (static (hasplacingarea ?_G255 ?_G247))) 
+  (static (hasplacingarea ?_G171 ?_G238)) 
+  (maybe (static (hasplacingarea ?_G173 ?_G241))) 
+  (maybe (static (hasplacingarea ?_G255 ?_G241))) 
+  (maybe (static (hasplacingarea ?_G173 ?_G247))) 
+  (maybe (init (robotat ?_G191 ?_G221))) (init (on ?_G267 ?_G238)) 
+  (init (on ?_G263 ?_G238)) (static (placingarealeft ?_G247)) 
+  (static (armcarryposture ?_G303)) 
+  (maybe (static (hasmanipulationarea ?_G173 ?_G226))) 
+  (maybe (static (hasmanipulationarea ?_G171 ?_G226))) 
+  (static (armtosideposture ?_G307)) (maybe (end (on ?_G263 ?_G241))) 
+  (maybe (end (on ?_G267 ?_G247))) (static (placingarearight ?_G241)) 
+  (static (torsoupposture ?_G322)) 
+  (maybe (static (hassittingarea ?_G173 ?_G255))) 
+  (maybe (static (at ?_G269 ?_G255))) (init (hastorsoposture ?_G188 ?_G322)) 
+  (static (armtuckedposture ?_G302)) (maybe (static (reachable ?_G241 ?_G226))) 
+  (maybe (static (reachable ?_G238 ?_G226))) 
+  (maybe (static (reachable ?_G247 ?_G226))) (static (hasarm ?_G191 ?_G203)) 
+  (static (hasarm ?_G191 ?_G204)) (static (table ?_G173)) 
+  (init (armfree ?_G204)) (init (armfree ?_G203)) 
+  (maybe (static (haspremanipulationarea ?_G171 ?_G221))) 
+  (maybe (static (haspremanipulationarea ?_G226 ?_G221))) 
+  (maybe (static (haspremanipulationarea ?_G173 ?_G221))) 
+  (static (torsomiddleposture ?_G317)) (init (hasarmposture ?_G203 ?_G306)) 
+  (init (hasarmposture ?_G204 ?_G306)) (static (manipulationarea ?_G226)) 
+  (static (armunnamedposture ?_G306)))
